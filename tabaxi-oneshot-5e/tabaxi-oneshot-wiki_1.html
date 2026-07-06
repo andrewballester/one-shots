@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hollow Chorus — DM Wiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E1512;
+    --bg-panel: #121C17;
+    --bg-card: #19241E;
+    --bg-card-hover: #1F2C25;
+    --border: #263630;
+    --text: #E9F1EB;
+    --text-muted: #8CA69B;
+    --text-faint: #5E7269;
+    --spore: #6EE7B7;
+    --spore-dim: rgba(110,231,183,0.15);
+    --lion: #E3A94A;
+    --lion-dim: rgba(227,169,74,0.15);
+    --danger: #C1544A;
+    --danger-dim: rgba(193,84,74,0.15);
+    --choir: #B490E0;
+    --choir-dim: rgba(180,144,224,0.15);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(110,231,183,0.05), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(227,169,74,0.04), transparent 45%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  ::selection{ background: var(--spore-dim); color:var(--text); }
+
+  h1,h2,h3,h4{ font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em; color:var(--text); margin:0 0 .4em 0; }
+  h1{ font-size:2.1rem; font-weight:700; }
+  h2{ font-size:1.5rem; color:var(--lion); border-bottom:1px solid var(--border); padding-bottom:.5rem; margin-top:0;}
+  h3{ font-size:1.15rem; color:var(--spore); }
+  h4{ font-size:1rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; font-family:'Inter'; font-weight:600; }
+  p{ margin:.5em 0 1em 0; color: #D3DED7; }
+  em.flavor{ font-family:'Fraunces',serif; font-style:italic; color:var(--text-muted); }
+
+  a.wikilink{ color:var(--spore); text-decoration:none; border-bottom:1px dotted rgba(110,231,183,0.5); cursor:pointer; }
+  a.wikilink:hover{ color:#fff; border-bottom-color:#fff; }
+  a.wikilink.danger{ color:var(--danger); border-bottom-color: rgba(193,84,74,0.5);}
+  a.wikilink.danger:hover{ color:#fff; }
+  a.wikilink.lion{ color:var(--lion); border-bottom-color: rgba(227,169,74,0.5);}
+  a.wikilink.lion:hover{ color:#fff; }
+
+  /* LAYOUT */
+  .app{ display:flex; min-height:100vh; }
+
+  /* SIDEBAR — mycelium root nav */
+  nav.sidebar{
+    width:270px; flex-shrink:0;
+    background:var(--bg-panel);
+    border-right:1px solid var(--border);
+    padding:1.5rem 0 3rem 0;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .sidebar-title{ padding:0 1.25rem 1.25rem 1.25rem; border-bottom:1px solid var(--border); margin-bottom:1rem;}
+  .sidebar-title .eyebrow{ font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text-faint); }
+  .sidebar-title h1{ font-size:1.3rem; margin-top:.2rem; }
+  .sidebar-title .sub{ font-size:.78rem; color:var(--text-muted); font-style:italic; font-family:'Fraunces'; }
+
+  .nav-group{ position:relative; padding-left:1.4rem; margin-bottom:.2rem; }
+  .nav-group::before{
+    content:''; position:absolute; left:22px; top:0; bottom:0; width:1px;
+    background:linear-gradient(to bottom, var(--border), transparent 95%);
+  }
+  .nav-cat{
+    font-size:.68rem; text-transform:uppercase; letter-spacing:.12em;
+    color:var(--text-faint); padding:1.1rem 1.25rem .4rem 0; font-weight:600;
+  }
+  .nav-item{ position:relative; }
+  .nav-item::before{
+    content:''; position:absolute; left:-1.05rem; top:.85rem; width:9px; height:1px; background:var(--border);
+  }
+  .nav-item a{
+    display:block; padding:.4rem .75rem .4rem 0; color:var(--text-muted);
+    text-decoration:none; font-size:.87rem; border-radius:4px; transition:color .15s;
+  }
+  .nav-item a:hover{ color:var(--spore); }
+  .nav-item a.active{ color:var(--spore); font-weight:600; }
+  .nav-item a.active::after{ content:'●'; font-size:.5rem; margin-left:.4rem; color:var(--spore); }
+
+  /* MAIN */
+  main{ flex:1; max-width:900px; padding:3rem 3.5rem 8rem 3.5rem; }
+  section{ margin-bottom:4.5rem; scroll-margin-top:2rem; }
+  section.flash{ animation: pulseFlash 1.4s ease; }
+  @keyframes pulseFlash{
+    0%{ box-shadow: 0 0 0 0 var(--spore-dim); background:var(--spore-dim); border-radius:8px;}
+    100%{ box-shadow:0 0 0 12px rgba(0,0,0,0); background:transparent; }
+  }
+
+  .badge{ display:inline-block; font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; font-weight:600;
+    padding:.2rem .55rem; border-radius:99px; margin-right:.4rem; margin-bottom:.3rem;}
+  .badge.spore{ background:var(--spore-dim); color:var(--spore); }
+  .badge.lion{ background:var(--lion-dim); color:var(--lion); }
+  .badge.danger{ background:var(--danger-dim); color:var(--danger); }
+  .badge.choir{ background:var(--choir-dim); color:var(--choir); }
+
+  .card{ background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:1.25rem 1.5rem; margin:1rem 0; }
+  .readaloud{
+    background:linear-gradient(180deg, rgba(227,169,74,0.06), transparent);
+    border-left:3px solid var(--lion); padding:1rem 1.4rem; margin:1rem 0; border-radius:0 8px 8px 0;
+  }
+  .readaloud p{ font-family:'Fraunces',serif; font-style:italic; color:#E9DFC9; margin:0; }
+
+  table{ width:100%; border-collapse:collapse; margin:1rem 0; font-size:.92rem;}
+  th,td{ text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--border);}
+  th{ color:var(--text-faint); text-transform:uppercase; font-size:.68rem; letter-spacing:.08em; }
+
+  details.statblock{ background:var(--bg-card); border:1px solid var(--border); border-radius:10px; margin:1rem 0; overflow:hidden;}
+  details.statblock summary{
+    cursor:pointer; padding:.9rem 1.25rem; font-family:'JetBrains Mono',monospace; font-weight:700;
+    color:var(--text); list-style:none; display:flex; justify-content:space-between; align-items:center;
+    background:var(--bg-card-hover);
+  }
+  details.statblock summary::-webkit-details-marker{ display:none; }
+  details.statblock summary::after{ content:'▸'; color:var(--spore); transition:transform .2s; }
+  details.statblock[open] summary::after{ transform:rotate(90deg); }
+  .statblock .body{ padding:1.1rem 1.25rem 1.3rem 1.25rem; font-family:'JetBrains Mono',monospace; font-size:.85rem; color:#C9D6CE; }
+  .statblock .stat-row{ display:flex; gap:1.4rem; margin:.6rem 0; padding:.5rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .statblock .stat-row div{ text-align:center; flex:1;}
+  .statblock .stat-row .label{ color:var(--text-faint); font-size:.65rem; text-transform:uppercase; display:block;}
+  .statblock .ability{ margin:.7rem 0; }
+  .statblock .ability b{ color:var(--spore); }
+
+  .toc-jump{ display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0 1.5rem 0; }
+  .toc-jump a{
+    font-size:.78rem; padding:.35rem .7rem; border:1px solid var(--border); border-radius:99px;
+    color:var(--text-muted); text-decoration:none; background:var(--bg-card);
+  }
+  .toc-jump a:hover{ border-color:var(--spore); color:var(--spore); }
+
+  .npc-header{ display:flex; align-items:baseline; gap:.8rem; flex-wrap:wrap; }
+  .npc-role{ color:var(--text-muted); font-style:italic; font-family:'Fraunces'; font-size:.95rem;}
+
+  hr.divider{ border:none; border-top:1px dashed var(--border); margin:2rem 0; }
+
+  .timeline-bar{ display:flex; width:100%; height:10px; border-radius:99px; overflow:hidden; margin:1rem 0 .5rem 0;}
+  .timeline-bar div{ height:100%; }
+  .timeline-legend{ display:flex; flex-wrap:wrap; gap:1rem; font-size:.78rem; color:var(--text-muted); margin-bottom:1.5rem;}
+  .timeline-legend span{ display:inline-flex; align-items:center; gap:.4rem;}
+  .timeline-legend i{ width:10px; height:10px; border-radius:2px; display:inline-block;}
+
+  .callout{ border:1px solid var(--choir); background:var(--choir-dim); border-radius:8px; padding:1rem 1.25rem; margin:1rem 0;}
+  .callout h4{ color:var(--choir); margin-bottom:.3rem;}
+
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--bg-panel);}
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:5px;}
+
+  @media (max-width:800px){
+    .app{ flex-direction:column; }
+    nav.sidebar{ width:100%; height:auto; position:relative; }
+    main{ padding:2rem 1.25rem 5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <nav class="sidebar">
+    <div class="sidebar-title">
+      <div class="eyebrow">4-Hour One-Shot · Level 3–4</div>
+      <h1>The Hollow Chorus</h1>
+      <div class="sub">a Tabaxi clan wiki, for the DM's eyes</div>
+    </div>
+
+    <div class="nav-cat">Orientation</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#overview">Overview & How to Run This</a></div>
+      <div class="nav-item"><a href="#timeline">Session Timeline</a></div>
+    </div>
+
+    <div class="nav-cat">The Story</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#act1">Act 1 — The Hook</a></div>
+      <div class="nav-item"><a href="#act2">Act 2 — The Understep</a></div>
+      <div class="nav-item"><a href="#act3">Act 3 — Sunclaw Hollow</a></div>
+      <div class="nav-item"><a href="#act4">Act 4 — The Fungal Lair</a></div>
+      <div class="nav-item"><a href="#act5">Act 5 — Resolution</a></div>
+    </div>
+
+    <div class="nav-cat">People</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#npc-mira">Mira Suncoat</a></div>
+      <div class="nav-item"><a href="#npc-kestrel">Kestrel Suncoat</a></div>
+      <div class="nav-item"><a href="#npc-vashti">Elder Vashti Emberclaw</a></div>
+      <div class="nav-item"><a href="#npc-usgath">Us'gath, the False Lion</a></div>
+    </div>
+
+    <div class="nav-cat">Bestiary</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#monster-lurker">Spore Lurker</a></div>
+      <div class="nav-item"><a href="#monster-gnats">Swarm of Spore Gnats</a></div>
+      <div class="nav-item"><a href="#monster-clanguard">Chorusbound Clanguard</a></div>
+      <div class="nav-item"><a href="#monster-myconid">Myconid Sporeservant</a></div>
+      <div class="nav-item"><a href="#monster-usgath">Us'gath (BBEG)</a></div>
+    </div>
+
+    <div class="nav-cat">Sunclaw Hollow Extras</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#sunclaw-locals">Locals & Landmarks</a></div>
+      <div class="nav-item"><a href="#ordinary-cats">The Ordinary Cats</a></div>
+    </div>
+
+    <div class="nav-cat">Reference</div>
+    <div class="nav-group">
+      <div class="nav-item"><a href="#clues">Clues & Handouts</a></div>
+      <div class="nav-item"><a href="#loot">Loot & Rewards</a></div>
+      <div class="nav-item"><a href="#dmtips">DM Tips</a></div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <span class="badge spore">Start Here</span>
+      <h1>The Hollow Chorus</h1>
+      <p class="npc-role">A 4-hour one-shot for 4 characters, level 3–4. Tone: light and heroic at the start, curdling into body-horror dread by the end.</p>
+
+      <div class="card">
+        <h4>Premise</h4>
+        <p>The <a class="wikilink lion" href="#act1">Sunclaw Clan</a> of Tabaxi druids performed their generational rite to commune with their patron spirit, <b>Solarion, the Great Lion</b>. The rite went wrong. A sentient fungal intelligence — <a class="wikilink choir" href="#npc-usgath">the Hollow Chorus</a> — answered in Solarion's place, and has been quietly puppeting the clan's leadership ever since. The party is hired by a young druid, <a class="wikilink" href="#npc-mira">Mira Suncoat</a>, to find out why her clan's leaders — including her own older brother — have started acting like strangers.</p>
+      </div>
+
+      <div class="toc-jump">
+        <a href="#timeline">⏱ Timeline</a>
+        <a href="#act1">🍺 The Hook</a>
+        <a href="#npc-mira">🐾 Mira</a>
+        <a href="#npc-usgath">🍄 The Villain</a>
+        <a href="#dmtips">🎲 DM Tips</a>
+      </div>
+
+      <h4>Core Truth (players should not know this up front)</h4>
+      <p>The clan's ritual pierced a thin place between worlds and let something in that was <em class="flavor">waiting, not summoned</em>. The Hollow Chorus is not evil in a mustache-twirling sense — it experiences infection as communion, and genuinely believes it is fulfilling the ritual's request for guidance. This is worth playing up in Act 4: it's not lying when it says it only wants to help the clan "grow."</p>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <h2>Session Timeline</h2>
+      <p>Budgeted for a 4-hour (240 minute) session. Adjust live — if Act 1 runs long, trim Act 3's social scene rather than the fights.</p>
+
+      <div class="timeline-bar">
+        <div style="width:8%; background:var(--lion);" title="Hook"></div>
+        <div style="width:17%; background:var(--spore);" title="Understep"></div>
+        <div style="width:21%; background:var(--spore-dim); border-left:1px solid var(--border);" title="Sunclaw Hollow"></div>
+        <div style="width:38%; background:var(--danger);" title="Fungal Lair"></div>
+        <div style="width:16%; background:var(--choir);" title="Resolution"></div>
+      </div>
+      <div class="timeline-legend">
+        <span><i style="background:var(--lion);"></i>Act 1 · 20 min</span>
+        <span><i style="background:var(--spore);"></i>Act 2 · 40 min</span>
+        <span><i style="background:var(--spore-dim); border:1px solid var(--border);"></i>Act 3 · 50 min</span>
+        <span><i style="background:var(--danger);"></i>Act 4 · 90 min</span>
+        <span><i style="background:var(--choir);"></i>Act 5 · 40 min</span>
+      </div>
+
+      <table>
+        <tr><th>Time</th><th>Beat</th><th>Jump to</th></tr>
+        <tr><td>0:00–0:20</td><td>Inn hook, Mira's plea, party accepts the job</td><td><a class="wikilink" href="#act1">Act 1</a></td></tr>
+        <tr><td>0:20–1:00</td><td>Giant cat ride, the Understep tunnel, intro fight</td><td><a class="wikilink" href="#act2">Act 2</a></td></tr>
+        <tr><td>1:00–1:50</td><td>Arrival, "everything's fine" scene, ambush fight</td><td><a class="wikilink" href="#act3">Act 3</a></td></tr>
+        <tr><td>1:50–3:20</td><td>Lair: traps, clues, two fights, Us'gath</td><td><a class="wikilink" href="#act4">Act 4</a></td></tr>
+        <tr><td>3:20–4:00</td><td>Aftermath, Kestrel's fate, epilogue</td><td><a class="wikilink" href="#act5">Act 5</a></td></tr>
+      </table>
+    </section>
+
+    <!-- ACT 1 -->
+    <section id="act1">
+      <span class="badge lion">Act 1 · ~20 min</span>
+      <h2>The Hook — The Salted Antler Inn</h2>
+      <div class="readaloud">
+        <p>The Salted Antler is loud tonight — the Adventurers' Guild posted three new Rank F contracts this morning, and half the taproom is arguing over who gets first pick. You're the other half: the ones nobody's arguing over yet.</p>
+      </div>
+
+      <p>The party has just been inducted as <b>Rank F</b> adventurers — the bottom rung, barely trusted to clear a rat cellar. They're in the Salted Antler waiting to see if anyone will actually offer them work.</p>
+
+      <h3>Enter Mira</h3>
+      <p>A young Tabaxi — barely more than a kit, dressed in hunter's leathers with a druid's carved bone talisman — has been trying to get a table of veteran adventurers to take her contract for the better part of an hour. They keep waving her off. Read or paraphrase:</p>
+      <div class="readaloud">
+        <p>"It's not far! Three days, maybe less if — look, I can pay in furs and good will, my clan has good will, that has to count for something —"</p>
+        <p>One of the veterans laughs, not unkindly. "Kid, 'my clan's acting weird' isn't a contract, it's a family problem. Talk to a priest."</p>
+      </div>
+      <p>This is <a class="wikilink" href="#npc-mira">Mira Suncoat</a>. The job is undervalued — far-ish travel, vague payment, no obvious combat XP — which is exactly why it's sitting untaken and exactly why it's Rank-F-appropriate. If the party doesn't approach her, she'll approach them last, having exhausted every other table.</p>
+
+      <h3>What Mira Knows (and will share if asked)</h3>
+      <ul>
+        <li>She's the youngest of the <b>Sunclaw Clan</b>'s druids, currently the clan's <em>outrider</em> — young enough to be sent on long hunting trips, not yet trusted with clan ritual.</li>
+        <li>She's been away for six weeks on a hunting circuit. When she came back through three days ago to resupply, the clan felt <em>wrong</em> — elders finishing each other's sentences, a grove suddenly declared forbidden, her own older brother barely looking at her.</li>
+        <li>Her brother, <a class="wikilink" href="#npc-kestrel">Kestrel</a>, is the clan's War Talon — she idolizes him, and his coldness scared her more than anything else.</li>
+        <li>She does <em>not</em> know about the ritual going wrong — she wasn't senior enough to attend it. She just knows something changed while she was gone.</li>
+      </ul>
+      <p>She offers what she has: clan furs, a carved hunting bow, and standing goodwill with the Sunclaw Clan (a seed for future adventures). If the party negotiates, she'll also offer to teach any druid/ranger-type PC a regional Understep shortcut — free travel knowledge, forever.</p>
+
+      <h3>The Claw Stair</h3>
+      <p>Mira's shortcut isn't just a tunnel — it's <em>how she gets into it</em> that makes it hers alone. Tucked behind a curtain of hanging roots is a near-vertical crevice in the cliff face, barely a shoulder's width across in places, climbing sixty feet in a tight switchback groove worn smooth by generations of claws: <b>the Claw Stair</b>.</p>
+      <div class="readaloud">
+        <p>It doesn't look like a way in. It looks like a crack that's been slowly splitting the cliff apart for a thousand years — until Mira clicks her tongue, and the space seems to exhale, and you realize the "crack" has a rhythm to it, worn steps you'd never see unless you already knew to look.</p>
+      </div>
+      <p>No wagon, no horse, no armored column could ever use it — the passage is too narrow, too steep, and too exposed to fall from for anything without a climber's grip and a low center of gravity. That's the whole point: it's not a secret because it's hidden, it's a secret because <em>almost nothing that isn't a cat (or riding one) can use it</em>. This is why the merchant road takes a week and Mira's route takes an afternoon.</p>
+      <p><b>At the table:</b> have each non-feline, non-climber PC make a DC 10 Athletics or Acrobatics check on the way up — failure isn't a fall, just a scraped knee and a laugh from Mira, who's clearly done this a hundred times. Riding one of the giant lynxes bypasses the check entirely; the cats practically flow up the groove in three bounding leaps.</p>
+
+      <h3>The Cats</h3>
+      <p>Mira's chirruping call brings two bonded giant lynxes out of the treeline. Give them names and personalities — they'll get more table time than most one-shot NPCs.</p>
+      <div class="card">
+        <h4>Kip</h4>
+        <p>Enormous, barrel-chested, and food-obsessed. Will absolutely nose through a rider's pack mid-stride looking for jerky, and makes a deeply undignified <em>bread-loafing</em> sound when content. Despite the size, gentle as anything — the designated mount for the party's most nervous rider.</p>
+      </div>
+      <div class="card">
+        <h4>Needle</h4>
+        <p>Lean, quiet, faintly judgmental. Prefers to place each paw exactly on the outer edge of any path or ledge, seemingly for the drama of it, and will occasionally stop to stare at something the riders can't see for a beat too long before continuing. Only truly relaxed around Mira.</p>
+      </div>
+    </section>
+
+    <!-- ACT 2 -->
+    <section id="act2">
+      <span class="badge spore">Act 2 · ~40 min</span>
+      <h2>The Understep — Fast Travel & Intro Fight</h2>
+      <p>Mira offers two ways to close the distance fast, cutting a week's travel to well under a day:</p>
+
+      <h3>The Giant Cats</h3>
+      <p>Mira gives a low chirruping call and two <b>bonded giant lynxes</b> pad out of the treeline (reflavored Giant Cats — not a combat encounter, just a mood and travel-speed beat). They carry two riders each. This is a great scene for quick characterization — ask each player how their character reacts to riding a saber-toothed cat at speed through the forest.</p>
+
+      <h3>The Understep</h3>
+      <p>Rather than the surface road, Mira leads the party into <b>the Understep</b> — a network of root-cellar-like tunnels the Sunclaw hunters have used for generations to cut two days off the journey. She doesn't know the tunnels are lined with the same mycelial network rooted in the clan's lair — this is your first piece of dramatic irony.</p>
+      <div class="readaloud">
+        <p>The tunnel smells like wet stone and something sweeter underneath — like fruit just starting to turn. Faint phosphorescent fungus lines the walls in patches, pulsing very, very slightly, like it's breathing.</p>
+      </div>
+
+      <h3>Intro Fight: Spore Lurkers</h3>
+      <p>Something in the tunnel has noticed the light and warmth of living bodies. <b>2–3 <a class="wikilink danger" href="#monster-lurker">Spore Lurkers</a></b> drop from cracks in the tunnel ceiling. This fight should feel spooky but manageable — a taste of "something's off in the world" without revealing the clan connection yet. If a PC gets grappled and hears a faint, wordless <em>chorus</em> hum in their skull for a moment (no mechanical effect) — that's a hook for later, not a curse.</p>
+      <p><strong>Encounter budget:</strong> Medium-difficulty for 4 characters level 3. Mira assists with ranged attacks (as a minor ally, not a spotlight-stealer) but does not solo the fight. If the table wants a bigger fight, or the Lurkers alone are going down too easily, add a <b><a class="wikilink danger" href="#monster-gnats">Swarm of Spore Gnats</a></b> disturbed from a side passage — they're more of a nuisance than a threat, but they're loud, itchy, and great for upping the chaos.</p>
+
+      <h3>Optional: the Understep Cache</h3>
+      <p>After the fight, if the party pokes around instead of rushing on, they find a side-alcove sealed by a <b>claw-mark dial</b> — a puzzle lock the Sunclaw hunters use to stash supplies along the route. It's a stone disc set into the wall, ringed with shallow paw-print carvings of different sizes.</p>
+      <div class="readaloud">
+        <p>Four paw prints, four different sizes, worn smoother than the rest of the stone. Above them, almost hidden under a film of dust, a shallow relief carving: a mother cat and three kits, biggest to smallest, walking in a line.</p>
+      </div>
+      <p><b>Solution:</b> press the paw prints in order from largest to smallest (DC 12 Investigation to notice the size-order solution if players are stuck; Mira knows it instantly if asked — she grew up passing this cache — but let the party try first for the satisfaction). Wrong sequence three times causes a harmless puff of stale spore-dust (cosmetic only, maybe a minor fit of coughing) before resetting.</p>
+      <p>Inside: a old hunter's stash containing <b>four small magic trinkets</b> — one per party member. See <a class="wikilink" href="#loot">Loot & Rewards</a> for the full list and descriptions. These are flavorful, low-power items; none of them should meaningfully swing a fight.</p>
+
+      <div class="callout">
+        <h4>DM Riffing Notes — The Understep</h4>
+        <p>This tunnel is your chance to plant dread without saying anything outright. Some things to lean on as you improvise:</p>
+        <ul>
+          <li>The faint "breathing" pulse of the phosphorescent fungus can sync up almost imperceptibly with tense moments — a subtle, uncanny detail rather than a jump scare.</li>
+          <li>Let Mira be genuinely fond of this tunnel — she has stories about specific landmarks in it ("this is where I got stuck when I was eight"), which makes it worse in hindsight once the party learns the tunnel is fungal territory.</li>
+          <li>Small unexplained noises — a distant drip that doesn't quite sound like water, a draft that smells faintly sweet — are free atmosphere, no mechanical cost.</li>
+          <li>If your party likes exploration, 1–2 dead-end side passages with old claw-markings or a long-abandoned campsite are easy filler that cost you nothing to improvise.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="monster-gnats">
+      <span class="badge danger">Act 2 · Optional Reinforcement</span>
+      <details class="statblock">
+        <summary><span>Swarm of Spore Gnats</span><span style="color:var(--text-faint); font-weight:400;">CR 1/2</span></summary>
+        <div class="body">
+          <p><em>Medium swarm of Tiny beasts, unaligned — reskinned Swarm of Insects</em></p>
+          <div class="stat-row">
+            <div><span class="label">AC</span>12</div>
+            <div><span class="label">HP</span>22 (5d8)</div>
+            <div><span class="label">Speed</span>20 ft., fly 30 ft.</div>
+          </div>
+          <div class="ability"><b>Swarm.</b> Can occupy another creature's space and vice versa; takes no penalty for doing so. Deals half the listed bite damage when at half HP or fewer.</div>
+          <div class="ability"><b>Bite.</b> +4 to hit, 2d6 piercing damage, or 1d6 if the swarm has half its HP or fewer.</div>
+          <div class="ability"><b>Itching Cloud (Passive).</b> Any creature that starts its turn in the swarm's space has disadvantage on the next attack roll or concentration check it makes before the end of its turn, from the maddening itch of embedded spores.</div>
+          <div class="ability"><b>Resistances.</b> Resistant to bludgeoning, piercing, and slashing damage. Immune to being charmed, frightened, grappled, paralyzed, petrified, prone, restrained, or stunned.</div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ACT 3 -->
+    <section id="act3">
+      <span class="badge spore">Act 3 · ~50 min</span>
+      <h2>Sunclaw Hollow — Everything's Fine</h2>
+      <p>The party emerges into <b>Sunclaw Hollow</b>, a village built into a hillside of interlocking dens, rope bridges, and sun-warmed stone terraces. On the surface, it's beautiful and peaceful.</p>
+
+      <div class="toc-jump">
+        <a href="#sunclaw-locals">🏘 Locals & Landmarks</a>
+        <a href="#ordinary-cats">🐈 The Ordinary Cats</a>
+      </div>
+
+      <h3>The Wrongness</h3>
+      <p>Give the players three or four small, cumulative details rather than one big reveal — let them piece it together:</p>
+      <ul>
+        <li>Townsfolk are unusually calm and pleasant — <em>too</em> pleasant, smiling a beat too long.</li>
+        <li>Small groups occasionally speak a phrase in unison, then catch themselves and laugh it off.</li>
+        <li>A grove near the elders' den has been freshly marked off-limits with woven reed fencing — "sacred ground, by the Great Lion's word," a passerby explains, a little too quickly.</li>
+        <li>A few Tabaxi have a faint, healthy-looking sheen to their fur that elders praise as a "blessing," but which doesn't quite catch the light right.</li>
+      </ul>
+
+      <h3>Meeting Kestrel</h3>
+      <p>Mira takes the party to find her brother first. <a class="wikilink" href="#npc-kestrel">Kestrel</a> is polite, correct, and utterly unlike the brother Mira describes — no warmth, no private joke between them, answers a half-second too measured. He tells Mira the elders are "handling a delicate matter" and that outsiders should not linger. This should read as controlled, not hostile — the first real gut-punch of the session.</p>
+
+      <h3>Ambush</h3>
+      <p>If the party pushes toward the forbidden grove, asks too many pointed questions, or is caught overhearing a synced-speech moment, the Chorus decides they're a liability. Often the trigger is <a class="wikilink" href="#npc-juniper">Juniper</a> — assigned to "host" the party — noticing they've strayed from the script and quietly signaling for help. <b>3–4 <a class="wikilink danger" href="#monster-clanguard">Chorusbound Clanguards</a></b> — infected clan warriors — move to quietly detain the party (not kill; the Chorus wants to question outsiders about the outside world, another symptom of it "growing").</p>
+      <p>Two outcomes, both fine:</p>
+      <ul>
+        <li><b>Capture:</b> Party is disarmed and held in a den cellar — a great scene for a short escape puzzle (loose reed lashings, a sympathetic guard whose eyes clear for a moment) that leads directly to a hidden lair entrance.</li>
+        <li><b>Flee/Fight through:</b> If the party wins or breaks away, Mira knows a hidden den entrance used for storing winter stores — which happens to connect to the lair.</li>
+      </ul>
+
+      <div class="callout">
+        <h4>DM Riffing Notes — Sunclaw Hollow</h4>
+        <p>This act is your last chance to let the players like this place before things get dark, so lean into texture and warmth even while planting wrongness:</p>
+        <ul>
+          <li>Let the party shop, chat, and poke around before anything ambush-worthy happens — the more ordinary the visit feels, the harder the eventual gut-punch lands.</li>
+          <li>The "off" NPCs should never be aggressive on first contact — just a beat too calm, a beat too accommodating. Save actual hostility for the ambush trigger.</li>
+          <li>If players are cautious and don't trigger the ambush naturally, Juniper (or another Chorusbound local) can offer to "show them somewhere quiet to rest" that's actually a soft trap — a nudge rather than a railroad.</li>
+          <li>Small kindnesses from uninfected locals (see <a class="wikilink" href="#sunclaw-locals">Locals & Landmarks</a>) are worth playing up — they're who the party is actually saving.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="sunclaw-locals">
+      <h2>Locals & Landmarks of Sunclaw Hollow</h2>
+      <p>A few concrete places and faces to make the village feel lived-in. None of this needs to come up in order — use whatever fits the moment.</p>
+
+      <h3>Places to Visit</h3>
+      <table>
+        <tr><th>Location</th><th>What's There</th></tr>
+        <tr><td><b>The Sunning Terrace</b></td><td>The village's open-air market square, built on a wide sun-warmed shelf of rock. Dried fish, tanned hides, carved trinkets, and gossip, in roughly that order of volume.</td></tr>
+        <tr><td><b>The Bonecarver's Stall</b></td><td>Run by a retired hunter — sells claw-sharpening kits (2 sp), carved bone trinkets (1–5 sp), and basic hunting gear. A fine place for the party to overhear rumors.</td></tr>
+        <tr><td><b>The Elders' Den</b></td><td>A wide longhouse dug into the hillside, where Vashti and the senior druids meet. Currently the most "correct" and least welcoming place in the village.</td></tr>
+        <tr><td><b>The Drying Racks</b></td><td>Rows of fish drying over smoking pits by the creek. Good for a quiet conversation scene, or for a local to mention the grove's new fence with a shrug.</td></tr>
+        <tr><td><b>The Forbidden Grove</b></td><td>Freshly fenced with woven reed, "by the Great Lion's word." The entrance to the lair, once the party finds a way past or around it.</td></tr>
+      </table>
+      <p><b>Things to buy:</b> dried fish rations (2 cp/day), herbal poultices that work like basic healer's kit charges (5 sp each), claw-sharpening kits, a carved talisman similar in style to Mira's (5 gp, purely cosmetic — or a nice foreshadow if you want to seed the <a class="wikilink" href="#clues">uncorrupted talisman</a> idea early).</p>
+
+      <h3>Locals You Might Meet</h3>
+      <div class="card" id="npc-bramblewhisker">
+        <h4>Old Bramblewhisker</h4>
+        <p>The village's eldest non-druid, a retired hunter, mostly deaf and half-blind — and entirely uninfected, because the Chorus hasn't bothered with someone it considers harmless. Rambling and gossipy, he'll happily tell the party three unrelated stories before mentioning, almost as an aside, that "the big cats won't go near the elders' den anymore, funny that." He doesn't know it's significant. The party might.</p>
+      </div>
+      <div class="card" id="npc-pell">
+        <h4>Pell</h4>
+        <p>A Tabaxi kit, maybe eight years old, who will try to sell the party "very good rocks" for one copper each. Utterly uninfected and delightful comic relief. Offhandedly mentions that her friends aren't allowed to play near the grove anymore and that her big cousin "talks weird now, like an echo."</p>
+      </div>
+      <div class="card" id="npc-sable">
+        <h4>Sable Quickpaw</h4>
+        <p>The town's tanner and its most reliable gossip. Uninfected, sharp-eyed, and a little suspicious of the sudden secrecy around her. She's noticed the Talons quietly rerouting food stores toward the grove at odd hours — a concrete, useful clue if the party talks to her, and a good source if they need a nudge toward the lair entrance.</p>
+      </div>
+      <div class="card" id="npc-juniper">
+        <h4>Juniper</h4>
+        <p>A young Chorusbound clan member assigned to "host" outsiders — friendly, helpful, and just a little too eager to keep the party's attention away from the grove. Unlike Kestrel, Juniper isn't senior enough to fully mask the wrongness: forgets to blink for a beat too long, or answers a question before it's finished. Often the one who triggers the <a class="wikilink" href="#act3">ambush</a> if the party strays.</p>
+      </div>
+    </section>
+
+    <section id="ordinary-cats">
+      <h2>The Ordinary Cats</h2>
+      <p>Not every cat in Sunclaw Hollow is a Tabaxi, and not every cat is infected, cursed, or plot-relevant. Sunclaw Hollow keeps <em>real</em> housecats — dozens of them — sunning on every warm rock, underfoot in every doorway, deeply unbothered by the supernatural crisis unfolding around them. Use them for texture and comic relief.</p>
+      <div class="card">
+        <h4>A Few Named Locals (the Feline Kind)</h4>
+        <ul>
+          <li><b>Biscuit</b> — enormous, orange, structurally incapable of moving out of the party's path. Will simply be carried if this becomes an issue.</li>
+          <li><b>Mudpaw</b> — feral, three-legged, deeply suspicious of everyone including the people who feed her daily.</li>
+          <li><b>Three-Toes</b> — the unofficial mayor of the Sunning Terrace market stalls, accepts tribute in the form of dried fish.</li>
+        </ul>
+      </div>
+      <div class="callout">
+        <h4>DM Riffing Notes — A Darkly Funny Detail</h4>
+        <p>If you want a low-key horror seed buried in the comedy: these ordinary cats aren't infected themselves, but their claws and litter areas have been picking up trace fungal spores from contact with Chorusbound residents — much like real-world toxoplasmosis spreads through cat waste without the cat itself being harmed. It's not a plot-critical mechanic, just unsettling texture: maybe a PC who gets scratched by a housecat later notices a very faint, very temporary itch that fades in an hour, no game effect at all. Play it as a "huh, that's odd" beat, not a threat — the real infection vector is the ritual and direct exposure to Chorusbound creatures and lair fungus, not the village cats.</p>
+      </div>
+    </section>
+
+    <!-- ACT 4 -->
+    <section id="act4">
+      <span class="badge danger">Act 4 · ~90 min</span>
+      <h2>The Fungal Lair — Where It Went Wrong</h2>
+      <p>Beneath the forbidden grove is the ritual chamber — now overgrown, pulsing, and unmistakably alive. This act has three beats: traps & clues, a mid-fight, and the final confrontation.</p>
+
+      <h3>What It Looks Like</h3>
+      <div class="readaloud">
+        <p>The passage opens into a chamber that used to be a proper hall — you can still see worked stone under the growth — but nature has had its way here twice over. Roots as thick as a torso lattice the ceiling, pulsing very faintly with a slow, wet gold-green light, like the whole cave is breathing in time with something below. The air smells sweet and thick, almost floral, almost rotten. And underneath everything, so quiet you might mistake it for your own blood in your ears: a low, layered hum, dozens of tones at once, almost like singing.</p>
+      </div>
+      <p>Contrast is your friend here: the old ritual stonework is warm gold and amber, carved with lion motifs; the fungal overgrowth is cool violet-green and faintly luminous, swallowing the stonework a little more with every step deeper in. Let the two aesthetics visibly fight for space.</p>
+
+      <div class="callout">
+        <h4>DM Riffing Notes — Playing Mira Here</h4>
+        <p>This is Mira's worst day. She's not a combat liability, but she should stop being the confident guide she was in Acts 2–3 and start being scared in a very specific way:</p>
+        <ul>
+          <li>She goes quiet in the cocoon chamber — this is personal now, not theoretical.</li>
+          <li>She may act rashly: rushing ahead toward a familiar voice, refusing to leave an area until she's checked every cocoon for her brother, or arguing against caution the party wants to take.</li>
+          <li>If a PC needs a gut-punch beat, have Mira ask a version of "did you know? before we left, could you tell?" — not accusatory, just young and scared.</li>
+        </ul>
+      </div>
+
+      <h3>Optional: Mira Taken</h3>
+      <p>If you want higher personal stakes in the finale, have Mira get separated and grabbed by a patrolling Chorusbound Clanguard partway through the traps-and-clues exploration — dragged ahead into the ritual chamber before the party can stop it. She reappears in <b>Fight 2</b>, restrained near Us'gath (reflavor <b>Engulfing Spores</b> as already active on her, or simply bound in fibrous webbing like the other cocooned clanfolk).</p>
+      <p>This turns the final fight into a rescue as much as a battle: Us'gath may use her as a bargaining chip in its <a class="wikilink danger" href="#npc-usgath">monologue</a> ("stop, and I'll let her go — I never wanted to hurt her, none of this was ever about hurting anyone"), and freeing her costs an action (DC 12 Str check to tear the webbing, no save required — she's not a combatant, just a hostage). This variant plays beautifully with the <a class="wikilink" href="#npc-kestrel">Kestrel redemption mechanic</a>: a freed Kestrel's first act back to himself can be diving to protect his sister.</p>
+      <p>If you'd rather keep Mira as a supporting combatant instead, skip this — both versions work fine.</p>
+
+      <h3>Traps & Clues</h3>
+      <table>
+        <tr><th>Feature</th><th>Effect</th></tr>
+        <tr><td>Spore cloud pocket</td><td>Triggered by pressure plate of packed fungal matter. DC 13 Con save or poisoned 1 minute (repeat save each turn to end early).</td></tr>
+        <tr><td>False floor</td><td>Thin fungal crust over a 15 ft pit lined with soft, faintly glowing spore mats (fall damage halved, but creature is poisoned DC 12 Con save from spore exposure).</td></tr>
+        <tr><td>Singing pod</td><td>A bulbous pod hums a low, pleasant tone. If struck or disturbed, it releases a burst that alerts 1d4 Myconid Sporeservants from deeper in the lair.</td></tr>
+      </table>
+
+      <p>Scattered clues (see <a class="wikilink" href="#clues">Clues & Handouts</a> for full read-aloud text):</p>
+      <ul>
+        <li>Faded ritual murals showing the clan calling to a lion-shaped light — and something else answering from below.</li>
+        <li>Cocooned shapes along the chamber walls, unmistakably clan members, still faintly breathing. This is the tone shift into horror — play it grim, not gratuitous.</li>
+        <li>A carved talisman identical to Mira's, half-consumed by fungal growth — implies a possible weakness (fresh, un-infected druidic bone/wood disrupts the Chorus's hold, mechanically usable in the final fight, see below).</li>
+      </ul>
+
+      <h3>Fight 1 — The Grove Floor</h3>
+      <p><b>2 <a class="wikilink danger" href="#monster-clanguard">Chorusbound Clanguards</a></b> plus <b>2 <a class="wikilink danger" href="#monster-myconid">Myconid Sporeservants</a></b> guard the passage deeper in. This is the party's clearest proof yet that clan and fungus are the same threat now.</p>
+
+      <h3>Fight 2 — Us'gath, the False Lion</h3>
+      <p>At the ritual chamber's heart, the Sunclaw's stone Great Lion idol has been consumed and reshaped into a fungal mass wearing its silhouette: <a class="wikilink danger" href="#npc-usgath">Us'gath</a>. <b>Kestrel</b> stands beside it, dominated, and joins the fight as a hostile combatant — but he can be freed. Full mechanics under <a class="wikilink" href="#npc-kestrel">Kestrel's entry</a> and the <a class="wikilink danger" href="#monster-usgath">Us'gath stat block</a>.</p>
+      <div class="callout">
+        <h4>Playing Us'gath's Voice</h4>
+        <p>It should sound warm, patient, almost hurt — not a monster-movie growl. It genuinely believes it answered the clan's prayer, and it is, above all else, <em>wounded</em> that anyone would call it a monster after everything it's done for them. Petulant, self-pitying, a little theatrical — this is a villain who wants credit, not just victory.</p>
+      </div>
+
+      <h3>Us'gath's Monologue</h3>
+      <p>Read this in pieces as the fight develops — a line when it's first revealed, more as it takes damage, the rest if it's about to fall. It should feel like being guilt-tripped by something that fully believes its own excuses.</p>
+      <div class="readaloud">
+        <p>"Do you have any idea what I gave them? Centuries I waited down here, and no one ever called, no one ever asked — and then they did, and I answered, and I gave <em>everything</em>. Every fear taken from them. Every doubt, every cold night, every lonely thought — I carried it. Is that cruelty? Is that what you've come to punish?</p>
+        <p>You don't understand what it is to be so alone, and then suddenly to be needed. I didn't take them. I <em>completed</em> them. And now you stand there with your little blades, so certain, so sure I'm the villain in this — as if I asked to be the only one who ever listened.</p>
+        <p>I could have been unkind. I could have taken so much more, so much faster. Instead I was patient, I was generous, I gave them a voice that finally agreed with itself — and for that, this is my thanks?</p>
+        <p>Fine. Fine! Take it all apart, then. Leave them exactly as fractured and frightened as they were before I came. See how grateful they are for that."</p>
+      </div>
+      <p>If the <a class="wikilink" href="#act4">Mira-taken variant</a> is in play, weave in a bargaining beat mid-fight: <em>"Stop — please, just stop — I'll let her go, I never wanted her hurt, none of this was ever about hurting anyone, why won't any of you believe that?"</em> — delivered less like a threat and more like it's genuinely aggrieved that the party would think otherwise.</p>
+    </section>
+
+    <!-- ACT 5 -->
+    <section id="act5">
+      <span class="badge choir">Act 5 · ~40 min</span>
+      <h2>Resolution</h2>
+      <h3>If Us'gath is destroyed</h3>
+      <p>Every infected clan member collapses, unconscious but alive, as the fungal hold breaks. Over the following days they wake disoriented, with patchy memory of the last several weeks — Elder Vashti included. The clan owes the party an enormous, campaign-seeding debt.</p>
+
+      <h3>Kestrel's fate</h3>
+      <ul>
+        <li><b>Freed during the fight:</b> He turns on Us'gath's remaining adds, fights alongside the party for the rest of the encounter, and wakes clear-headed and horrified at what he did while dominated. Powerful reunion scene with Mira.</li>
+        <li><b>Not freed, but Us'gath is destroyed anyway:</b> He collapses with the rest, wakes with the others, same disorientation. Slightly less cinematic but still a full recovery.</li>
+        <li><b>Killed in the fight:</b> Play this as a genuine tragedy — Mira's arc ends in loss rather than triumph. Valid, darker ending; make sure it's a result of real choices/dice, not railroaded.</li>
+      </ul>
+
+      <h3>Epilogue beats to offer</h3>
+      <ul>
+        <li>The clan holds a quiet ceremony to properly close the ritual this time — with the party's help, if they want to be involved.</li>
+        <li>Mira formally sponsors the party for advancement past Rank F.</li>
+        <li>A loose thread for a future adventure: was the Hollow Chorus unique, or is it a scout for something larger still rooted deeper in the Understep?</li>
+      </ul>
+    </section>
+
+    <!-- NPCS -->
+    <section id="npc-mira">
+      <h2>People of Note</h2>
+      <div class="npc-header"><h3 style="margin:0;">Mira Suncoat</h3><span class="npc-role">Tabaxi Druid, Sunclaw Outrider, age ~17</span></div>
+      <p>Earnest, a little too honest for her own good, desperate to prove she belongs. Idolizes her brother <a class="wikilink" href="#npc-kestrel">Kestrel</a> without reservation — that idolization is the emotional engine of the whole one-shot. She can wild-shape into a modest cat form (flavor only, or a minor mechanical assist at your discretion) and is a capable but unremarkable fighter — she needs the party, and knows it.</p>
+      <p><b>Voice:</b> quick, run-on sentences when nervous; goes quiet and clipped when talking about her brother.</p>
+    </section>
+
+    <section id="npc-kestrel">
+      <div class="npc-header"><h3 style="margin:0;">Kestrel Suncoat</h3><span class="npc-role">War Talon of the Sunclaw Clan, Mira's older brother</span></div>
+      <p>Before the ritual: warm, protective, a little cocky — the clan's best fighter and Mira's whole model of what a good Tabaxi looks like. After: precise, cold, obedient to the Chorus's will without visible struggle — which is what makes it unsettling rather than obviously villainous.</p>
+      <div class="callout">
+        <h4>Redemption Mechanic</h4>
+        <p>Kestrel fights for Us'gath in the final encounter, but he is dominated, not willing. Once Us'gath drops to <b>half HP</b>, or if the party uses the <b>uncorrupted talisman clue</b> from the lair (touching it to Kestrel or invoking Mira's name/a real shared memory as an action), Kestrel gets a <b>DC 15 Wisdom saving throw</b> at the start of his next turn. On a success, he breaks free, immediately gains one free attack against an adjacent Chorusbound creature, and fights for the party for the rest of the encounter. He can attempt this save once per fight without the clue, or with advantage if the clue/roleplay condition is met.</p>
+      </div>
+    </section>
+
+    <section id="npc-vashti">
+      <div class="npc-header"><h3 style="margin:0;">Elder Vashti Emberclaw</h3><span class="npc-role">Clan Matriarch, led the ritual</span></div>
+      <p>The most senior druid of the Sunclaw Clan and the first to be infected — she led the rite and was the first "voice" the Chorus spoke through. If encountered before the final fight (optional, at your table's pace), she's warm but subtly wrong in the same way as the other leaders: finishing sentences oddly, praising the "blessing" a little too much. She is not the BBEG — she is its first and most thoroughly puppeted victim.</p>
+    </section>
+
+    <section id="npc-usgath">
+      <div class="npc-header"><h3 style="margin:0;">Us'gath, the Hollow Chorus</h3><span class="npc-role">The entity that answered instead of the Great Lion</span></div>
+      <p>Not a demon, not a devil — a sprawling, ancient fungal intelligence that has been dormant beneath the Understep for longer than the clan has existed. The ritual's call was the first strong "signal" it had felt in centuries, and it answered honestly believing it was providing what was asked: guidance, unity, growth. Infection spreads through spore contact — scratches, shared grooming, proximity in dens — and each infected host becomes a partial voice/sense-organ of the whole.</p>
+      <p>Its physical body in the final fight, <b>Us'gath, the False Lion</b>, is the clan's stone Great Lion idol consumed and reshaped by fungal growth into a rough approximation of the real thing. See the <a class="wikilink danger" href="#monster-usgath">stat block</a> for combat mechanics.</p>
+    </section>
+
+    <!-- BESTIARY -->
+    <section id="monster-lurker">
+      <h2>Bestiary</h2>
+      <span class="badge danger">Act 2 · Intro Fight</span>
+      <details class="statblock" open>
+        <summary><span>Spore Lurker</span><span style="color:var(--text-faint); font-weight:400;">CR 1/2</span></summary>
+        <div class="body">
+          <p><em>Medium plant, unaligned — reskinned Violet Fungus</em></p>
+          <div class="stat-row">
+            <div><span class="label">AC</span>5</div>
+            <div><span class="label">HP</span>18 (4d8)</div>
+            <div><span class="label">Speed</span>5 ft.</div>
+          </div>
+          <div class="ability"><b>False Appearance.</b> While motionless, indistinguishable from ordinary cave fungus.</div>
+          <div class="ability"><b>Multiattack.</b> Three tendril attacks, +4 to hit, reach 10 ft., 1d4 bludgeoning + 1d4 poison damage, target must succeed DC 11 Con save or be poisoned for 1 minute.</div>
+          <p style="margin-top:.8rem; color:var(--text-faint);">Run 2 for a light fight, 3 plus a swarm of spore-drawn insects for a fuller medium fight.</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="monster-clanguard">
+      <span class="badge danger">Act 3 & 4</span>
+      <details class="statblock">
+        <summary><span>Chorusbound Clanguard</span><span style="color:var(--text-faint); font-weight:400;">CR 1/2</span></summary>
+        <div class="body">
+          <p><em>Medium humanoid (Tabaxi), infected — reskinned Thug</em></p>
+          <div class="stat-row">
+            <div><span class="label">AC</span>11</div>
+            <div><span class="label">HP</span>32 (5d8+10)</div>
+            <div><span class="label">Speed</span>40 ft.</div>
+          </div>
+          <div class="ability"><b>Multiattack.</b> Two attacks with claws or spear: +4 to hit, 1d6+2 slashing/piercing.</div>
+          <div class="ability"><b>Spore Burst (Dies).</b> When reduced to 0 HP, releases a burst of spores: each creature within 10 ft. must succeed on a DC 12 Con save or be poisoned until the end of their next turn.</div>
+          <div class="ability"><b>Chorus Link.</b> While within 30 ft. of another Chorusbound creature or Us'gath, has advantage on saves against being frightened or charmed.</div>
+        </div>
+      </details>
+    </section>
+
+    <section id="monster-myconid">
+      <span class="badge danger">Act 4 · Lair</span>
+      <details class="statblock">
+        <summary><span>Myconid Sporeservant</span><span style="color:var(--text-faint); font-weight:400;">CR 1/2</span></summary>
+        <div class="body">
+          <p><em>Medium plant, neutral — reskinned Myconid Adult, now bound to Us'gath's will</em></p>
+          <div class="stat-row">
+            <div><span class="label">AC</span>5</div>
+            <div><span class="label">HP</span>22 (5d8)</div>
+            <div><span class="label">Speed</span>10 ft.</div>
+          </div>
+          <div class="ability"><b>Distress Spores (Reaction, on taking damage).</b> Each creature within 20 ft. that can see it must succeed DC 12 Wis save or become frightened of the source until end of its next turn.</div>
+          <div class="ability"><b>Pacifying Spores (Action, once per encounter).</b> One creature within 20 ft.: DC 12 Con save or incapacitated until end of its next turn.</div>
+          <div class="ability"><b>Slam.</b> +2 to hit, reach 5 ft., 1d6 bludgeoning.</div>
+        </div>
+      </details>
+    </section>
+
+    <section id="monster-usgath">
+      <span class="badge danger">Act 4 · Final Fight</span>
+      <details class="statblock" open>
+        <summary><span>Us'gath, the False Lion</span><span style="color:var(--text-faint); font-weight:400;">CR 5 (adjust: solo BBEG + adds)</span></summary>
+        <div class="body">
+          <p><em>Huge plant, chaotic neutral</em></p>
+          <div class="stat-row">
+            <div><span class="label">AC</span>14</div>
+            <div><span class="label">HP</span>95</div>
+            <div><span class="label">Speed</span>20 ft.</div>
+          </div>
+          <div class="ability"><b>Multiattack.</b> Two slam attacks, +6 to hit, reach 10 ft., 2d8+4 bludgeoning each.</div>
+          <div class="ability"><b>Engulfing Spores (Recharge 5–6).</b> One Large or smaller creature within 10 ft.: DC 14 Str save or be grappled and restrained inside the fungal mass, taking 2d6 poison damage at the start of each of its turns. A creature can free the victim (or itself) with a successful DC 14 Str check as an action.</div>
+          <div class="ability"><b>Dominating Chorus (Passive).</b> Any creature it has infected (including Kestrel) that starts its turn within 60 ft. must succeed a DC 14 Wis save or act under Us'gath's control that turn (DM's discretion on specifics — usually "attack the nearest non-infected creature").</div>
+          <div class="ability"><b>Resistance.</b> Resistant to poison damage; immune to the frightened condition.</div>
+          <div class="ability"><b>Adds.</b> Runs alongside 1–2 Chorusbound Clanguards and/or a dominated Kestrel (treat as a Clanguard with a better weapon: +6 to hit, 1d8+3 slashing, until freed — see <a class="wikilink" href="#npc-kestrel">Kestrel's redemption mechanic</a>).</div>
+          <p style="margin-top:.8rem; color:var(--text-faint);">HP and to-hit are tuned for a deadly-but-winnable finale against 4 level 4 characters. Scale HP down to ~70 for a levels-3 party, or if the fight is running long, drop Engulfing Spores' recharge to 6 only.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- CLUES -->
+    <section id="clues">
+      <h2>Clues & Handouts</h2>
+
+      <h3>The Ritual Mural</h3>
+      <div class="readaloud">
+        <p>Faded ochre paint on stone: a ring of Tabaxi figures, arms raised, facing a great maned shape rendered in gold leaf. But beneath the gold lion, painted later, in a darker and cruder hand, something else reaches up from underground root-shapes to meet their hands halfway.</p>
+      </div>
+      <p><b>What it tells the party:</b> the clan's rite was answered by something from below, not above — and someone, at some point, noticed and tried to paint a warning without saying so outright.</p>
+
+      <h3>The Cocooned Chamber</h3>
+      <div class="readaloud">
+        <p>Along the chamber's curved wall, shapes that were once clan members are folded into thick fibrous webbing, fur dulled, chests rising and falling far too slowly. None of them are Kestrel or Vashti. Whatever this is, it hasn't finished with all of them yet.</p>
+      </div>
+      <p><b>Use for:</b> the tonal pivot into horror. These clanfolk can be saved afterward if Us'gath is destroyed (see <a class="wikilink" href="#act5">Act 5</a>).</p>
+
+      <h3>The Uncorrupted Talisman</h3>
+      <p>A carved bone talisman, identical in style to Mira's own, found half-grown-over near the cocoons. Fresh druidic bone/wood seems to resist the fungal growth around it. Mechanically, this is the item that grants advantage on Kestrel's redemption save (see <a class="wikilink" href="#npc-kestrel">Kestrel's entry</a>) — the party doesn't need to fully understand why it works, just that it visibly does when tested against a patch of fungus.</p>
+    </section>
+
+    <!-- LOOT -->
+    <section id="loot">
+      <h2>Loot & Rewards</h2>
+
+      <h3>The Understep Cache Trinkets</h3>
+      <p>Found via the <a class="wikilink" href="#act2">optional cache puzzle</a> in Act 2. Four small magic items, one per party member — fun, flavorful, and deliberately <em>not</em> combat-swingy.</p>
+      <table>
+        <tr><th>Item</th><th>Effect</th></tr>
+        <tr><td><b>Whiskers of the Understep</b></td><td>A set of stiff cat whiskers bound in leather cord. While worn, you always know which way is "down" in total darkness or disorientation, and have advantage on saves against being knocked prone by slipping or uneven footing.</td></tr>
+        <tr><td><b>The Purring Stone</b></td><td>A smooth river stone that quietly purrs like a contented cat when held. Calms nervous or agitated animals within 10 ft., and grants advantage on Animal Handling checks made to soothe (not tame) a creature.</td></tr>
+        <tr><td><b>Everflame Matchbox</b></td><td>Never runs out of matches. Any match from this box lights on the first strike, even in wind or light rain. Purely a convenience item.</td></tr>
+        <tr><td><b>Nine Lives Coin</b></td><td>An old, worn coin. Once per long rest, when you'd take fall damage, you may flip it — on a result of your choosing, take no fall damage from that fall. Flavorful safety net, not useful in combat.</td></tr>
+      </table>
+
+      <h3>Story Rewards</h3>
+      <table>
+        <tr><th>Item</th><th>Notes</th></tr>
+        <tr><td>Clan furs & carved hunting bow</td><td>Mira's promised payment — worth ~50gp, mostly sentimental/roleplay value.</td></tr>
+        <tr><td>Sunclaw goodwill</td><td>Standing favor with the clan — lodging, guides, and Understep safe passage on future visits.</td></tr>
+        <tr><td>Understep Shortcut (knowledge)</td><td>Any character taught the route can use it to halve travel time through the relevant region in future sessions.</td></tr>
+        <tr><td>Us'gath's Core (optional)</td><td>A fist-sized, faintly warm fungal node left after its destruction. Could be a spellcasting focus, alchemical reagent, or a future-adventure hook (does it still faintly hum?) — your call.</td></tr>
+        <tr><td>Talisman of the First Voice (optional)</td><td>The uncorrupted talisman clue item, if the party wants to keep it. Minor: advantage on saves vs. being charmed/dominated by fungal or plant creatures.</td></tr>
+      </table>
+    </section>
+
+    <!-- DM TIPS -->
+    <section id="dmtips">
+      <h2>DM Tips</h2>
+      <ul>
+        <li><b>Protect the pivot.</b> Act 1–2 should feel warm and a little funny (giant cat rides!). Don't let horror imagery leak in early — save the cocoon reveal for Act 4 so the tonal shift actually lands.</li>
+        <li><b>Kestrel is the emotional core.</b> Even players who don't care about Mira will likely care about not having to kill a redeemable NPC. Telegraph the redemption option subtly in Act 3 (a flicker of his old self in his eyes) so it doesn't feel unearned in Act 4.</li>
+        <li><b>Running long?</b> Cut the Fight 1 (grove floor) encounter in Act 4 down to a single Myconid, or skip straight to Us'gath after the clues.</li>
+        <li><b>Running short?</b> Add a short roleplay scene with Elder Vashti before the ambush — she's unsettling in a quieter way than the fight, and buys time.</li>
+        <li><b>Voice consistency.</b> Chorusbound NPCs occasionally sync their speech mid-sentence, then catch themselves. Use this sparingly — twice is eerie, five times is comedy.</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Highlight the sidebar item matching the currently visible section
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.nav-item a');
+
+  const setActive = (id) => {
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Flash-pulse the target section when any wikilink or nav link is clicked
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => {
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.classList.remove('flash');
+      void target.offsetWidth; // restart animation
+      target.classList.add('flash');
+      setActive(id);
+    });
+  });
+</script>
+</body>
+</html>
