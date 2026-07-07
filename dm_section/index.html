@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DM Section — One-Shot Toolkit</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  main{max-width:900px;margin:0 auto;padding:48px 40px 80px;}
+  @media(max-width:600px){main{padding:32px 20px 60px;}}
+
+  /* ── Header ── */
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-soft);font-weight:bold;margin-bottom:6px;}
+  h1{font-size:34px;margin:0 0 6px;color:var(--accent);}
+  .subtitle{color:var(--ink-soft);font-size:15px;font-style:italic;margin:0 0 36px;}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:4px;margin:40px 0 16px;}
+
+  /* ── One-shot cards ── */
+  .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:600px){.shot-grid{grid-template-columns:1fr;}}
+  a.shot-card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px 22px;text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s;}
+  a.shot-card:hover{border-color:var(--accent-soft);box-shadow:0 2px 10px rgba(138,59,43,.13);}
+  .shot-title{font-size:20px;font-weight:bold;color:var(--accent);margin-bottom:4px;}
+  .shot-meta{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+  .shot-desc{font-size:13.5px;color:var(--ink-soft);font-style:italic;line-height:1.5;}
+  .shot-link{display:inline-block;margin-top:12px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:bold;}
+
+  /* ── Cheat sheet grid ── */
+  .cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .cs-thumb{position:relative;cursor:pointer;border-radius:6px;overflow:hidden;border:2px solid var(--line);background:#eee;aspect-ratio:4/3;transition:border-color .15s,box-shadow .15s;}
+  .cs-thumb:hover{border-color:var(--accent-soft);box-shadow:0 3px 12px rgba(0,0,0,.18);}
+  .cs-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cs-label{position:absolute;bottom:0;left:0;right:0;background:rgba(43,37,32,.6);color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 8px;text-align:center;}
+
+  /* ── Lightbox ── */
+  .lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;align-items:center;justify-content:center;}
+  .lb.open{display:flex;}
+  .lb-img-wrap{position:relative;max-width:92vw;max-height:90vh;display:flex;align-items:center;justify-content:center;}
+  .lb-img-wrap img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;box-shadow:0 4px 30px rgba(0,0,0,.5);}
+  .lb-btn{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;font-size:28px;cursor:pointer;padding:14px 18px;border-radius:6px;line-height:1;transition:background .15s;}
+  .lb-btn:hover{background:rgba(255,255,255,.25);}
+  .lb-prev{left:14px;}
+  .lb-next{right:14px;}
+  .lb-close{position:fixed;top:14px;right:18px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:24px;cursor:pointer;padding:7px 12px;border-radius:6px;line-height:1;transition:background .15s;}
+  .lb-close:hover{background:rgba(255,255,255,.25);}
+  .lb-counter{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.65);font-size:13px;font-family:Georgia,serif;letter-spacing:.05em;}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">D&amp;D 5e · DM Section</div>
+  <h1>One-Shot Toolkit</h1>
+  <p class="subtitle">DM wikis and reference sheets. Keep this tab open at the table.</p>
+
+  <h2>One-Shots</h2>
+  <div class="shot-grid">
+    <a href="masks-of-millbrook/index.html" class="shot-card">
+      <div class="shot-title">The Masks of Millbrook</div>
+      <div class="shot-meta">3.5 hrs · Level 3–4 · 4–5 players</div>
+      <div class="shot-desc">A cozy small-town mystery curdling into paranoia and grief as the party realises how much of the town they've already trusted isn't real.</div>
+      <div class="shot-link">Open wiki →</div>
+    </a>
+    <a href="tabaxi-oneshot-5e/index.html" class="shot-card">
+      <div class="shot-title">The Hollow Chorus</div>
+      <div class="shot-meta">4 hrs · Level 3–4 · 4 players</div>
+      <div class="shot-desc">Light and heroic at the start, curdling into body-horror dread by the end.</div>
+      <div class="shot-link">Open wiki →</div>
+    </a>
+  </div>
+
+  <h2>DM Cheat Sheets</h2>
+  <div class="cs-grid">
+    <div class="cs-thumb" onclick="openLb(0)" role="button" tabindex="0" aria-label="Cheat sheet 1">
+      <img src="dm_cheatsheet_01.jpeg" alt="DM cheat sheet 1" loading="lazy">
+      <div class="cs-label">Sheet 1</div>
+    </div>
+    <div class="cs-thumb" onclick="openLb(1)" role="button" tabindex="0" aria-label="Cheat sheet 2">
+      <img src="dm_cheatsheet_02.jpeg" alt="DM cheat sheet 2" loading="lazy">
+      <div class="cs-label">Sheet 2</div>
+    </div>
+    <div class="cs-thumb" onclick="openLb(2)" role="button" tabindex="0" aria-label="Cheat sheet 3">
+      <img src="dm_cheatsheet_03.jpeg" alt="DM cheat sheet 3" loading="lazy">
+      <div class="cs-label">Sheet 3</div>
+    </div>
+    <div class="cs-thumb" onclick="openLb(3)" role="button" tabindex="0" aria-label="Cheat sheet 4">
+      <img src="dm_cheatsheet_04.jpeg" alt="DM cheat sheet 4" loading="lazy">
+      <div class="cs-label">Sheet 4</div>
+    </div>
+    <div class="cs-thumb" onclick="openLb(4)" role="button" tabindex="0" aria-label="Cheat sheet 5">
+      <img src="dm_cheatsheet_05.png" alt="DM cheat sheet 5" loading="lazy">
+      <div class="cs-label">Sheet 5</div>
+    </div>
+    <div class="cs-thumb" onclick="openLb(5)" role="button" tabindex="0" aria-label="Cheat sheet 6">
+      <img src="dm_cheatsheet_06.jpeg" alt="DM cheat sheet 6" loading="lazy">
+      <div class="cs-label">Sheet 6</div>
+    </div>
+  </div>
+</main>
+
+<!-- Lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Cheat sheet viewer">
+  <button class="lb-close" onclick="closeLb()" aria-label="Close">&#10005;</button>
+  <button class="lb-btn lb-prev" onclick="stepLb(-1)" aria-label="Previous">&#8249;</button>
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <button class="lb-btn lb-next" onclick="stepLb(1)" aria-label="Next">&#8250;</button>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+<script>
+var sheets = [
+  'dm_cheatsheet_01.jpeg',
+  'dm_cheatsheet_02.jpeg',
+  'dm_cheatsheet_03.jpeg',
+  'dm_cheatsheet_04.jpeg',
+  'dm_cheatsheet_05.png',
+  'dm_cheatsheet_06.jpeg'
+];
+var current = 0;
+
+function openLb(i) {
+  current = i;
+  showLb();
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLb() {
+  document.getElementById('lb-img').src = sheets[current];
+  document.getElementById('lb-img').alt = 'DM cheat sheet ' + (current + 1);
+  document.getElementById('lb-counter').textContent = (current + 1) + ' / ' + sheets.length;
+}
+
+function stepLb(dir) {
+  current = (current + dir + sheets.length) % sheets.length;
+  showLb();
+}
+
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Keyboard nav
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lb');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') stepLb(1);
+  if (e.key === 'ArrowLeft') stepLb(-1);
+});
+
+// Click backdrop to close
+document.getElementById('lb').addEventListener('click', function(e) {
+  if (e.target === this) closeLb();
+});
+
+// Keyboard activation for thumbnails
+document.querySelectorAll('.cs-thumb').forEach(function(el, i) {
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(i); }
+  });
+});
+</script>
+</body>
+</html>
