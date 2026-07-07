@@ -1,0 +1,15 @@
+title: "One-Shot Toolkit"
+description: "DM wikis and pregenerated characters for 5e one-shots."
+baseurl: "/one-shots"
+url: "https://andrewballester.github.io"
+
+# Don't process the raw one-shot HTML files as Jekyll pages
+exclude:
+  - masks-of-millbrook
+  - tabaxi-oneshot-5e
+  - "**/*.zip"
+  - "**/*.jsonl"
+  - README.md
+
+# Keep .html extensions on pages (no pretty-url rewriting)
+permalink: /:path

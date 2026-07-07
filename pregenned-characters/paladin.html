@@ -1,101 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ser Iona Brightshield — Level 3 Paladin Pregen</title>
-<style>
-  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
-  .layout{display:flex;min-height:100vh;}
-  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
-  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
-  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
-  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
-  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
-  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
-  nav.toc a:hover{background:var(--tell);color:var(--ink);}
-  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
-  main{flex:1;padding:30px 40px 70px;max-width:840px;}
-  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
-  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
-  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
-  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
-  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
-  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
-  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
-  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
-  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
-  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
-  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
-  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
-  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
-  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
-  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
-  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
-  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
-  .prof-list li:last-child{border-bottom:none;}
-  .prof-list li.prof{font-weight:bold;color:var(--ink);}
-  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
-  .prof-list li:not(.prof){color:var(--ink-soft);}
-  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
-  .pval{font-weight:bold;min-width:24px;text-align:right;}
-  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
-  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
-  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
-  .section{margin-bottom:24px;}
-  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
-  .feature{margin-bottom:12px;}
-  .fname{font-weight:bold;font-size:14px;}
-  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
-  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
-  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
-  .equip-list{list-style:none;padding:0;margin:0;}
-  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
-  .equip-list li:last-child{border-bottom:none;}
-  .spell-slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
-  .sslot{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 10px;text-align:center;}
-  .sslot .sv{font-size:17px;font-weight:bold;color:var(--accent);line-height:1.1;}
-  .sslot .sl{font-size:9.5px;text-transform:uppercase;color:var(--ink-soft);}
-  .spell-list{list-style:none;padding:0;margin:0;}
-  .spell-list li{font-size:13px;padding:2.5px 0;border-bottom:1px dotted var(--line);}
-  .spell-list li:last-child{border-bottom:none;}
-  .slvl{display:inline-block;background:var(--chip);border-radius:999px;font-size:10px;padding:1px 6px;color:var(--ink-soft);margin-right:4px;}
-  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
-  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
-  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
-  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
-  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
-  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
-  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
-  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
-  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="toc">
-  <div class="brand">Level 3 Pregens</div>
-  <div class="brand-sub">One-shot characters · 5e</div>
-  <h2>Martial</h2>
-  <a href="barbarian.html">Barbarian</a>
-  <a href="fighter.html">Fighter</a>
-  <a href="monk.html">Monk</a>
-  <a href="paladin.html" class="active">Paladin</a>
-  <a href="ranger.html">Ranger</a>
-  <a href="rogue.html">Rogue</a>
-  <h2>Casting</h2>
-  <a href="bard.html">Bard</a>
-  <a href="cleric.html">Cleric</a>
-  <a href="druid.html">Druid</a>
-  <a href="sorcerer.html">Sorcerer</a>
-  <a href="warlock.html">Warlock</a>
-  <a href="wizard.html">Wizard</a>
-  <h2>Hub</h2>
-  <a href="index.html">All Characters</a>
-</nav>
+---
+layout: character
+title: "Ser Iona Brightshield — Level 3 Paladin Pregen"
+char_class: paladin
+---
 <main>
   <img src="portraits/paladin.png" class="portrait" alt="Ser Iona Brightshield portrait">
   <h1 class="char-name">Ser Iona Brightshield</h1>
@@ -257,6 +164,3 @@
   </div>
   <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
 </main>
-</div>
-</body>
-</html>
