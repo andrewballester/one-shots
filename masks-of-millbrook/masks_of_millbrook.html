@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Masks of Millbrook — DM Wiki</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf6ee;
+    --panel: #ffffff;
+    --ink: #2b2520;
+    --ink-soft: #55483d;
+    --accent: #8a3b2b;
+    --accent-soft: #c97b5f;
+    --line: #e2d6c3;
+    --tell: #eef4ea;
+    --tell-line: #9db98a;
+    --read: #f4ece0;
+    --read-line: #c9a86a;
+    --secret: #fbeaea;
+    --secret-line: #c97b7b;
+    --table-head: #f1e4cf;
+    --chip: #f1e4cf;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    line-height: 1.55;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  nav.toc {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    padding: 20px 14px;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  nav.toc .brand {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  nav.toc .brand-sub { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 18px; }
+  nav.toc h2 {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent-soft);
+    margin: 18px 0 6px 4px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+  nav.toc h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  nav.toc a {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 1px;
+  }
+  nav.toc a:hover { background: var(--tell); color: var(--ink); }
+  main { flex: 1; padding: 36px 48px 90px; max-width: 920px; }
+  .eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-soft);
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  h1.title { font-size: 36px; margin: 0 0 6px; color: var(--accent); }
+  .subtitle { color: var(--ink-soft); margin: 0 0 20px; font-size: 16px; font-style: italic; }
+  section { margin-bottom: 50px; scroll-margin-top: 20px; }
+  h2.section-head {
+    font-size: 23px;
+    border-bottom: 2px solid var(--accent-soft);
+    padding-bottom: 6px;
+    color: var(--accent);
+    margin-top: 0;
+  }
+  h3 { color: var(--ink); font-size: 18px; margin-top: 28px; }
+  h4 { color: var(--ink); font-size: 15.5px; margin: 18px 0 4px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--table-head); }
+  tr:nth-child(even) td { background: #fffdf9; }
+  .quickjump { margin: 14px 0 6px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .quickjump a {
+    background: var(--panel);
+    border: 1px solid var(--accent-soft);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .quickjump a:hover { background: var(--tell); }
+  .tell {
+    background: var(--tell);
+    border-left: 4px solid var(--tell-line);
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14.5px;
+  }
+  .tell b { color: #3f6b2e; }
+  .readaloud {
+    background: var(--read);
+    border: 1px solid var(--read-line);
+    border-left: 4px solid var(--read-line);
+    padding: 14px 16px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  .readaloud .label {
+    font-style: normal; font-weight: bold; text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.06em; color: #8a6a2b;
+    display: block; margin-bottom: 6px;
+  }
+  .secret {
+    background: var(--secret);
+    border: 1px solid var(--secret-line);
+    border-left: 4px solid var(--secret-line);
+    padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 14.5px;
+  }
+  .secret .label {
+    font-weight: bold; text-transform: uppercase; font-size: 11px;
+    letter-spacing: 0.06em; color: var(--accent); display: block; margin-bottom: 6px;
+  }
+  .riff {
+    background: #f5f1e6; border: 1px dashed var(--accent-soft);
+    padding: 12px 16px; margin: 14px 0; border-radius: 6px; font-size: 14.5px;
+  }
+  .riff .label {
+    font-weight: bold; text-transform: uppercase; font-size: 11px;
+    letter-spacing: 0.06em; color: var(--accent-soft); display: block; margin-bottom: 6px;
+  }
+  .monologue {
+    background: #fbf7ee; border-left: 4px solid var(--accent);
+    padding: 14px 18px; margin: 14px 0; font-style: italic; border-radius: 0 6px 6px 0;
+  }
+  .actbar {
+    font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--accent-soft); font-weight: bold; margin: 0 0 4px;
+  }
+  .statblock {
+    background: #fffaf0; border: 2px solid var(--accent-soft); border-radius: 8px;
+    padding: 16px 20px; margin: 16px 0;
+  }
+  .statblock .namerow { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+  .statblock h4.name { margin: 0; font-size: 20px; color: var(--accent); }
+  .statblock .cr {
+    font-size: 12px; font-weight: bold; color: #fff; background: var(--accent);
+    padding: 3px 10px; border-radius: 999px;
+  }
+  .statblock .type { font-style: italic; color: var(--ink-soft); margin: 2px 0 8px; }
+  .statblock hr { border: none; border-top: 2px solid var(--accent-soft); margin: 8px 0; }
+  .chiprow { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+  .chip {
+    background: var(--chip); border: 1px solid var(--accent-soft); border-radius: 6px;
+    padding: 4px 10px; font-size: 13px; font-weight: bold;
+  }
+  .stats-row { display: flex; justify-content: space-between; text-align: center; margin: 10px 0; }
+  .stats-row div { flex: 1; }
+  .stats-row b { display: block; font-size: 12px; letter-spacing: 0.04em; }
+  .scaling { font-size: 13.5px; color: var(--ink-soft); font-style: italic; margin-top: 8px; }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: bold; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 10px;
+  }
+  .badge.real { background: #dcefd6; color: #3f6b2e; }
+  .badge.fake { background: #f6d9d9; color: #99332c; }
+  ul, ol { padding-left: 22px; }
+  .checklist li { margin-bottom: 6px; }
+  @media print {
+    nav.toc { display: none; }
+    main { max-width: none; padding: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="toc">
+    <div class="brand">The Masks of Millbrook</div>
+    <div class="brand-sub">3.5-Hour One-Shot · Level 3–4</div>
+
+    <h2>Orientation</h2>
+    <a href="#overview">Overview &amp; How to Run This</a>
+    <a href="#timeline">Session Timeline</a>
+
+    <h2>The Story</h2>
+    <a href="#act1">Act 1 — The Hook</a>
+    <a href="#act2">Act 2 — Meet the Town</a>
+    <a href="#act3">Act 3 — Pulling Threads</a>
+    <a href="#act4">Act 4 — The Old Millhouse</a>
+    <a href="#act5">Act 5 — The Ichor Pool</a>
+
+    <h2>People</h2>
+    <a href="#npc-garrick">Garrick Ostler</a>
+    <a href="#npc-elsbet">"Elsbet" Ostler</a>
+    <a href="#npc-corin">"Corin" Ashwell</a>
+    <a href="#npc-maren">Old Maren</a>
+    <a href="#npc-tomas">Tomas Wick</a>
+    <a href="#npc-aldwin">Brother Aldwin</a>
+    <a href="#npc-fenwick">Fenwick the Lookout</a>
+    <a href="#npc-willa">Willa Thorne</a>
+
+    <h2>Bestiary</h2>
+    <a href="#monster-bandits">Millbrook Road Bandits</a>
+    <a href="#monster-doppelganger">Doppelganger</a>
+    <a href="#monster-elder">Old Maren, Elder Doppelganger</a>
+    <a href="#monster-filler">Optional Filler</a>
+
+    <h2>Millbrook Extras</h2>
+    <a href="#millbrook-locals">Locals &amp; Landmarks</a>
+    <a href="#ordinary-folk">The Ordinary Townsfolk</a>
+
+    <h2>Reference</h2>
+    <a href="#clues">Clues &amp; Handouts</a>
+    <a href="#checks">Skill Checks by Locale</a>
+    <a href="#loot">Loot &amp; Rewards</a>
+    <a href="#dmtips">DM Tips</a>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <div class="eyebrow">3.5-Hour One-Shot · Level 3–4</div>
+      <h1 class="title">The Masks of Millbrook</h1>
+      <p class="subtitle">a doppelganger mystery wiki, for the DM's eyes</p>
+
+      <div class="eyebrow" style="margin-top:26px;">Start Here</div>
+      <h2 class="section-head" style="border:none; padding:0; margin-bottom:4px;">The Masks of Millbrook</h2>
+      <p>A 3.5-hour one-shot for 4–5 characters, level 3–4. Tone: cozy small-town mystery at the start, curdling
+      into paranoia and grief as the party realizes how much of the town they've already trusted isn't real.</p>
+
+      <h4>Premise</h4>
+      <p>A small cell of doppelgangers has spent the last month quietly replacing residents of the mill town of
+      <a href="#millbrook-locals">Millbrook</a> — including the innkeeper everyone loves,
+      <a href="#npc-maren">Old Maren</a>. The real townsfolk aren't dead; they're held in
+      <a href="#act4">the Old Millhouse</a> outside town while their doubles study them closely enough to be
+      convincing. The party is hired by <a href="#npc-garrick">Garrick Ostler</a>, whose daughter went "off" a
+      month ago, to find out what's happening — not realizing the warmest, most helpful person guiding their
+      investigation is the thing they're hunting.</p>
+
+      <div class="quickjump">
+        <a href="#timeline">⏱ Timeline</a>
+        <a href="#act1">🎭 The Hook</a>
+        <a href="#npc-maren">🏠 Old Maren</a>
+        <a href="#monster-elder">🃏 The Villain</a>
+        <a href="#dmtips">🎲 DM Tips</a>
+      </div>
+
+      <div class="secret">
+        <span class="label">Core Truth (players should not know this up front)</span>
+        This cell isn't scouting for conquest and it isn't malicious for its own sake. Doppelgangers who are
+        discovered are almost always killed on sight, everywhere they go — so this cell isn't infiltrating
+        Millbrook to exploit it, it's trying to <i>become</i> it, permanently, well enough that they never have
+        to run again. Old Maren genuinely believes that if she's careful and patient enough, she and her people
+        can just... stay. Live real lives. That doesn't make what she's done to the real Maren, Corin, and Elsbet
+        okay — but it's worth playing sincerely in <a href="#act5">Act 5</a>, not as a mustache-twirl.
+      </div>
+
+      <h4>Prep Checklist</h4>
+      <ul class="checklist">
+        <li>Keep the <span class="badge fake">Doppelganger</span> / <span class="badge real">Real</span> status
+        column in the <a href="#npcs">People</a> section DM-only — never say it out loud, only show it through
+        the <a href="#act3">tells</a>.</li>
+        <li>Have 4–5 pregens ready at level 3 if this is a first session for new players.</li>
+        <li>Decide how you'll voice Old Maren consistently warm for ~2 hours before the reveal — the twist only
+        lands if the players genuinely liked her first.</li>
+        <li>Reward: Garrick offers 25 gp/PC up front, another 25 gp/PC on success, plus free lodging at the
+        (real) Sleeping Otter Inn for a tenday.</li>
+      </ul>
+    </section>
+
+    <section id="timeline">
+      <h2 class="section-head">Session Timeline</h2>
+      <p>Budgeted for a 3.75-hour (~225 minute) session — a little longer than a bare-bones mystery because
+      <a href="#act3-detour">the Detour</a> earns its keep as a red herring and a non-doppelganger fight. Adjust
+      live — if <a href="#act2">Act 2</a> runs long, trim the <a href="#monster-filler">optional filler fight</a>
+      in <a href="#act4">Act 4</a> rather than the investigation or the Detour.</p>
+      <p><b>Act 1 · 10 min &nbsp; Act 2 · 35 min &nbsp; Act 3 · 75 min &nbsp; Act 4 · 40 min &nbsp; Act 5 · 65 min</b></p>
+      <table>
+        <tr><th>Time</th><th>Beat</th><th>Jump to</th></tr>
+        <tr><td>0:00–0:10</td><td>Garrick's plea, party accepts the job</td><td><a href="#act1">Act 1</a></td></tr>
+        <tr><td>0:10–0:45</td><td>Town intros, Maren's hospitality, tells quietly planted</td><td><a href="#act2">Act 2</a></td></tr>
+        <tr><td>0:45–1:20</td><td>Investigation, first confirmed doppelganger tells</td><td><a href="#act3">Act 3</a></td></tr>
+        <tr><td>1:20–2:00</td><td>The Detour: bandit ambush on the road, the new mill is a dead end</td><td><a href="#act3-detour">Act 3, Detour</a></td></tr>
+        <tr><td>2:00–2:40</td><td>The Old Millhouse: traps, captives, Maren unmasked</td><td><a href="#act4">Act 4</a></td></tr>
+        <tr><td>2:40–3:45</td><td>Climax fight, rescue, epilogue</td><td><a href="#act5">Act 5</a></td></tr>
+      </table>
+    </section>
+
+    <section id="act1">
+      <div class="actbar">Act 1 · ~10 min</div>
+      <h2 class="section-head">The Hook — Garrick's Plea</h2>
+      <p>The party is passing through, or already resting, at <a href="#millbrook-locals">the Sleeping Otter
+      Inn</a> when <a href="#npc-garrick">Garrick Ostler</a>, the town miller, corners them.</p>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        "Please — everyone in this town says I'm imagining it, that my Elsbet just needed some time to herself,
+        but I raised that girl. I know her. And the person in her room isn't her. Not really. I don't know how to
+        say that without sounding mad, but I'll pay you to just <i>look</i>. That's all I ask."
+      </div>
+      <p>Garrick isn't the only one who's noticed something — four townsfolk have quietly changed over the last
+      month — but he's the only one willing to say it out loud, and he's easy to dismiss as an overprotective
+      father. The job is undervalued precisely because it sounds unhinged, which is exactly why it's still
+      sitting open for a new adventuring party to take.</p>
+
+      <h4>What Garrick Knows (and will share if asked)</h4>
+      <ul>
+        <li>His daughter Elsbet came back from a errand into the woods about a month ago acting subtly wrong —
+        quieter, oddly agreeable, forgetting small things she'd never forget.</li>
+        <li>Around the same time, the blacksmith <a href="#npc-corin">Corin</a> stopped taking real commissions,
+        which is deeply unlike him.</li>
+        <li>He doesn't suspect <a href="#npc-maren">Old Maren</a> at all — she's been nothing but kind, checking
+        in on him constantly since Elsbet changed. (This is the point.)</li>
+        <li>He offers 25 gp/PC now, another 25 gp/PC on success, and free milling services for a year.</li>
+      </ul>
+    </section>
+
+    <section id="act2">
+      <div class="actbar">Act 2 · ~35 min</div>
+      <h2 class="section-head">Meet the Town — Everything's Fine</h2>
+      <p>Millbrook is warm, small, and ordinary. Let the party shop, chat, and settle in before anything feels
+      wrong — the more genuinely pleasant this act is, the harder <a href="#act4">Act 4</a> lands.</p>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        Millbrook is the kind of town where nothing happens — smoke curling lazily from the mill's chimney, the
+        Sleeping Otter's sign creaking in the wind, a few townsfolk nodding politely as you pass. It's exactly the
+        kind of place you'd want to retire to. That's what makes Garrick's fear so easy to wave off.
+      </div>
+
+      <h4>Old Maren's Hospitality</h4>
+      <p><a href="#npc-maren">Old Maren</a> greets the party like old friends within minutes of meeting them —
+      free meals, a good room, and unprompted local gossip that's always just true enough to keep their trust.
+      She'll gently point them toward Garrick, toward <a href="#npc-tomas">Tomas</a>, and eventually toward the
+      old millhouse — always steering just slightly away from herself.</p>
+
+      <div class="riff">
+        <span class="label">Example at the Table</span>
+        <p><b>DM (as Maren):</b> "Oh, don't you dare pay for that stew, sit, sit — you've had a long road, I can
+        tell." She's already refilling a mug before anyone asks. "Now — Garrick send you? Poor man's been beside
+        himself. I keep telling him Elsbet just needs some space, girls that age get like that, but between us"
+        — she leans in, voice dropping — "I did think it odd, her missing the Founding Day supper. She never
+        misses that."</p>
+        <p><b>Player:</b> "Do you think something happened to her?"</p>
+        <p><b>DM (as Maren):</b> "I think — and don't repeat this, I don't want to start a panic — I think you
+        should talk to Tomas before you write him off as just the town drunk. I don't believe everything he
+        says. But I believe some of it."</p>
+        <p>Notice what she's doing: nothing she says is false, and every line points the party toward real
+        leads. That's how she stays trusted for two more hours.</p>
+      </div>
+
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Playing Maren</span>
+        She should never lie outright if she can avoid it — she deflects, changes the subject, or answers with
+        something technically true. If a player uses a lie-detection effect on her early, have her dodge
+        smoothly (excuse herself, answer a different question) rather than fail the check. The reveal needs to
+        happen at <a href="#act4">the millhouse</a>, not get spoiled by a lucky Zone of Truth in this act.
+      </div>
+
+      <h4>The First Cracks</h4>
+      <p>Give the players small, cumulative details rather than one big reveal — let them piece it together over
+      the session:</p>
+      <ul>
+        <li><a href="#npc-elsbet">"Elsbet"</a> doesn't react when Garrick calls her "Bumblebee," her childhood
+        nickname — see <a href="#act3">Tell 2</a>.</li>
+        <li><a href="#npc-corin">"Corin"</a> has let a half-finished commission sit untouched for weeks, deeply
+        unlike the best smith in three villages — see <a href="#act3">Tell 1</a>.</li>
+        <li><a href="#npc-tomas">Tomas Wick</a>, the town drunk, keeps insisting he saw "two Elsbets" and gets
+        laughed out of every conversation.</li>
+        <li><a href="#npc-aldwin">Brother Aldwin</a> mentions, almost offhand, that attendance at evening prayers
+        has quietly dropped for exactly the people acting strangest.</li>
+      </ul>
+    </section>
+
+    <section id="act3">
+      <div class="actbar">Act 3 · ~45 min</div>
+      <h2 class="section-head">Pulling Threads — Investigation &amp; the First Tell</h2>
+      <p>This act is the mystery's engine: three or more clue sources, all roads leading to
+      <a href="#act4">the Old Millhouse</a>.</p>
+
+      <h4>The Ostler Mill (Elsbet's home)</h4>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        The mill smells of flour and damp wood. Elsbet's room is tidy — too tidy. A faint grey residue, almost
+        like ash mixed with jelly, is smeared along the windowsill, as if something climbed in rather than
+        through the door.
+      </div>
+      <p>A PC proficient in Nature or Arcana (DC 12) recognizes the residue as unnatural, though not necessarily
+      as doppelganger ichor unless they've encountered one before — see <a href="#clues">Clues &amp; Handouts</a>.</p>
+
+      <h4>Tomas's Testimony</h4>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        "I know how it sounds. But I saw her — Elsbet — walking up to her own house, calm as you like, while she
+        was already inside baking bread. Same face. Same walk. Nobody believes me 'cause I drink. Fine. But I
+        know what I saw."
+      </div>
+
+      <h4>Tell 1 — Catching "Corin"</h4>
+      <div class="tell">
+        <b>Tell 1 — Skill fumble:</b> if the party asks "Corin" to do simple smithing (fix a hinge, reshoe a
+        horse), he hesitates, grips the hammer wrong, or claims his hands are "still sore." The real Corin was
+        known as the fastest, best smith in three villages. This is a clean, low-stakes way to confirm a
+        doppelganger exists before the higher-stakes reveal in <a href="#act4">Act 4</a>.
+      </div>
+      <div class="riff">
+        <span class="label">Example at the Table</span>
+        <p><b>Player:</b> "Hey, while we're here — think you could true up this axe head? It's pulling a hair to
+        the left."</p>
+        <p><b>DM (as "Corin"):</b> He takes the axe, turns it over once, twice — a beat too long. "...Busy week.
+        Leave it, I'll get to it." He sets it down farther from the forge than a smith normally would, and
+        doesn't meet anyone's eyes.</p>
+        <p>If a PC has passive Perception 12+, mention privately that his hands don't have a single forge-burn
+        scar — odd for a smith supposedly fifteen years at the anvil. Don't call for a roll; just tell the
+        player who's watching closely.</p>
+      </div>
+      <p><b>On confrontation, don't let this one die here.</b> If the party presses "Corin" and he's caught, have
+      him bolt rather than fight to the death — a short chase, not a kill. Seeing a doppelganger revert to true
+      form (<a href="#act4">Tell 3</a>) is the session's biggest gut-punch, and it should happen exactly once, at
+      the <a href="#act5">climax</a>, not get spent early on a lesser cell member. If the party corners him
+      anyway, see his entry in <a href="#npc-corin">People</a> for a mercy option instead of a kill.</p>
+
+      <h4>Tell 2 — "Bumblebee"</h4>
+      <div class="tell">
+        <b>Tell 2 — Missing memory:</b> when Garrick or another local calls "Elsbet" by her childhood nickname,
+        "Bumblebee," she doesn't react, or reacts a beat too late. She also won't recognize an old friend's
+        running joke about the mill's stuck gate.
+      </div>
+      <div class="riff">
+        <span class="label">Example at the Table</span>
+        <p><b>Garrick:</b> "Bumblebee! There you are, sweetheart, I was —" He stops. Waits. The nickname just...
+        sits there.</p>
+        <p><b>"Elsbet" (half a second too late):</b> "...Sorry, Da. Long day." She doesn't ask what he was about
+        to say. The real Elsbet always did.</p>
+        <p>Play this quiet — no dramatic sting, no music cue. Let the players decide for themselves whether they
+        noticed, and let it sit unresolved if they don't ask about it directly.</p>
+      </div>
+
+      <h4 id="act3-detour">The Detour — Maren's Suggestion</h4>
+      <p>Once the party has a Tell or two and is clearly closing in, <a href="#npc-maren">Old Maren</a> offers a
+      lead of her own — sincerely enough that it doesn't feel like a deflection: "You know, now that you mention
+      it... I heard some of the new mill hands talking strange, down at the millworks by the river. Might be
+      nothing. Might be worth a look." It isn't a lie exactly — she's simply pointing them at the one place she
+      knows is completely unconnected to her, buying the cell another half-day to prepare.</p>
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Why This Works</span>
+        This is the one earlier place in the session Maren can outright <i>mislead</i> the party without
+        breaking her "never lies" rule too badly — she's not fabricating a threat, just redirecting attention to
+        a real, mundane place. It should feel like a reasonable lead, not an obvious red flag, or the party will
+        get suspicious of her too early.
+      </div>
+
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        The road to the new millworks follows the river north, away from town and into thicker woods. It's an
+        easy enough walk — until the birds go quiet all at once, and a low whistle answers from somewhere off
+        the road that definitely wasn't a bird at all.
+      </div>
+      <p><b>Ambush:</b> a small band of <a href="#monster-bandits">Millbrook Road bandits</a> — real, mundane,
+      entirely unconnected to the doppelganger plot — has been shaking down travelers on this stretch of road for
+      weeks, a local problem nobody's gotten around to solving. This fight is a deliberate palate cleanser: no
+      shapechanging, no mystery, just a straightforward combat encounter to stretch newer players' legs between
+      roleplay-heavy scenes. See the <a href="#monster-bandits">stat block</a> for scaling.</p>
+
+      <h4>The New Mill — A Dead End</h4>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        The new millworks is loud, busy, and utterly ordinary — waterwheel turning, sacks of grain stacked to the
+        rafters, a miller named Hobb wiping flour from his hands and squinting at you like you've wandered in
+        looking for trouble that doesn't exist here. "Strange talk? Lads always talk strange after too much
+        cider. That's the whole mystery, I'm afraid."
+      </div>
+      <p>There's nothing here. Let the party feel a little foolish, and a little more urgent about not wasting
+      more time — a good gut-check before <a href="#act4">Act 4</a> raises the stakes for real.</p>
+
+      <h4>Finding the Real Lead</h4>
+      <p>Back in town, the actual trail was in front of them the whole time: interrogating a caught doppelganger,
+      re-reading <a href="#clues">Garrick's ledger</a> (which places every disappearance within days of a
+      "traveling merchant" passing through a month ago), or simply taking <a href="#npc-tomas">Tomas</a>
+      seriously enough to ask where he saw the "two Elsbets" walk — all point to the long-abandoned Old Millhouse
+      a half-mile outside town, not the working mill downstream.</p>
+
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Handling Wrong Guesses</span>
+        If the party accuses an innocent townsfolk (or worse, <a href="#npc-tomas">Tomas</a> or
+        <a href="#npc-aldwin">Aldwin</a>), have the NPC react with hurt or offense, not violence, unless the
+        party escalates first. Keep the social cost low — new players shouldn't feel like they "lost" for
+        guessing wrong.
+      </div>
+    </section>
+
+    <section id="act4">
+      <div class="actbar">Act 4 · ~40 min</div>
+      <h2 class="section-head">The Old Millhouse — Where They're Kept</h2>
+      <p>An abandoned mill outside town, disused since a newer one was built closer to the river.</p>
+
+      <table>
+        <tr><th>Room</th><th>What's There</th></tr>
+        <tr><td><b>1 — Entrance / Guard Room</b></td><td><a href="#npc-fenwick">Fenwick</a>, a real, ordinary
+        human paid to keep watch and whistle a warning — not a doppelganger. Stealth, bribery, or a short
+        non-lethal scuffle; see his <a href="#npc-fenwick">entry</a> below.</td></tr>
+        <tr><td><b>2 — Holding Cells</b></td><td>The real Maren, Corin, and Elsbet, weak but alive, plus Petyr the
+        fisherman (shaken, alive) and the body of <a href="#npc-willa">Willa Thorne</a> — see below.</td></tr>
+        <tr><td><b>3 — The Ichor Pool Chamber</b></td><td>The leader's lair — see <a href="#act5">Act 5</a>.</td></tr>
+      </table>
+
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Why the Guard Isn't a Doppelganger</span>
+        Keep the "reverts to true form on death" reveal (<a href="#act3">Tell 3</a>) rare and saved for the
+        <a href="#act5">climax</a> — if the party fights and kills two or three doppelgangers on the way in, the
+        big unmasking of <a href="#npc-maren">Old Maren</a> loses its punch through repetition. Making the entry
+        guard a real, ordinary person also raises a nice quiet moral question before the fantastical one: will
+        the party hurt an innocent bystander just doing a paid job, who has no idea what he's actually guarding?
+      </div>
+
+      <h4>Traps &amp; Clues</h4>
+      <table>
+        <tr><th>Feature</th><th>Effect</th></tr>
+        <tr><td>Sticky ichor patch</td><td>Concealed on the floor near Room 1. DC 12 Dex save or fall prone and
+        alert the guard.</td></tr>
+        <tr><td>False door</td><td>A second "cellar door" is a hollow decoy stocked with mundane junk — a fun
+        red herring, no mechanical effect.</td></tr>
+        <tr><td>The captives' cell</td><td>Locked with a simple mechanism (DC 12 thieves' tools or the key taken
+        from the Room 1 guard).</td></tr>
+      </table>
+
+      <h4 id="willa-fate">Willa Thorne — What Happened to Her</h4>
+      <p>Willa was the cell's <i>first</i> victim, taken almost two months ago — a full month before Elsbet,
+      Corin, or anyone else. Maren chose her deliberately: a solitary seamstress, well-liked but without close
+      family who'd notice small inconsistencies right away. She was meant to be the safest possible test case
+      while the cell was still learning how to hold someone long enough to copy them convincingly.</p>
+      <p>It went wrong. Held longer than any of the others — nearly six weeks in a cramped side-chamber, with
+      little food and only the doppelganger studying her for company — Willa eventually pieced together what was
+      happening to her: a slip of the tongue from her own "reflection" during a study session, or simply too much
+      time alone to think. She tried to scream and fight her way out. A younger, more panicked member of the
+      cell (see <a href="#dmtips">DM Tips</a> for whether you want to name and stat this NPC, or leave it
+      abstract) killed her before Maren, who was away in town maintaining her own cover, could stop it. It is
+      the one death in this whole affair that Maren did not choose and has never forgiven herself, or her own
+      people, for.</p>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        Willa is laid in the farthest corner of the holding cell, wrapped in her own unraveled sewing thread as
+        if someone tried, clumsily and too late, to make her comfortable. Beside her, half-finished, is a small
+        christening gown — pale linen, delicate stitching, clearly meant as a gift. It will never be finished
+        now.
+      </div>
+      <p><b>Handout — the unfinished gown:</b> if the party asks around town afterward, Widow Hask (see
+      <a href="#ordinary-folk">Ordinary Townsfolk</a>) tears up immediately — Willa had been sewing it for the
+      miller Hobb's newborn granddaughter, a surprise nobody in Millbrook knew about yet. This is a good gutpunch
+      to deliver in the epilogue rather than in the lair itself; let the horror of the gown speak for itself
+      in Act 4, and land the emotional weight of <i>who it was for</i> back in town during <a href="#act5">the
+      resolution</a>.</p>
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Willa and Maren's Monologue</span>
+        Willa's death is the crack in Old Maren's self-justification. When she says she "never wanted anyone
+        hurt" in her <a href="#act5">monologue</a>, a sharp player may call out Willa by name. Let her flinch —
+        genuinely, not performatively — before she answers. She doesn't have a clean excuse for Willa. That's the
+        point.
+      </div>
+
+      <h4>Tell 3 — True Form</h4>
+      <div class="tell">
+        <b>Tell 3 — Reverts on defeat:</b> any doppelganger reduced to 0 HP or killed reverts instantly to its
+        true grey-skinned form. If this happens to an NPC the party trusted, play the silence afterward — it's
+        the session's biggest "oh no" moment.
+      </div>
+
+      <h4>The Betrayal</h4>
+      <p>However the party clears Rooms 1–2, <a href="#npc-maren">Old Maren</a> is waiting in Room 3 — not
+      fleeing, not hiding. She's been expecting them since roughly the moment they started asking questions in
+      town, and she'd rather have this conversation on her own terms.</p>
+      <div class="readaloud">
+        <span class="label">Read Aloud</span>
+        The old grinding room has been hollowed out. A shallow pool of grey, faintly glowing ichor fills the
+        center of the floor, rippling though nothing has touched it. And standing beside it, smiling the same
+        warm smile she's given you all night, is Old Maren.
+      </div>
+    </section>
+
+    <section id="act5">
+      <div class="actbar">Act 5 · ~60 min</div>
+      <h2 class="section-head">The Ichor Pool — Climax &amp; Resolution</h2>
+
+      <h4>Playing Old Maren's Voice</h4>
+      <p>Warm, tired, sincere — not a monster-movie villain. She isn't hiding contempt for the "real" people of
+      Millbrook; she wanted, genuinely, to become one of them. That's what makes this act land as tragedy as much
+      as combat.</p>
+
+      <h3>Old Maren's Monologue</h3>
+      <p>Read this in pieces as the fight develops — a line when she's first unmasked, more as she takes damage,
+      the rest if she's about to fall.</p>
+      <div class="monologue">
+        "You have no idea what it's like, being killed on sight in every town that ever learns what you are. Not
+        judged. Not exiled. Killed, on sight, no matter how long you'd lived there, no matter how many of them
+        you'd fed or bandaged or buried. So yes — I took her face. I took her whole life. But I was <i>good</i>
+        at it. I remembered her recipes. I worried about her father the way she would have. Is that nothing to
+        you?<br><br>
+        I never wanted the ones I replaced to suffer. I wanted them kept safe until I didn't need to keep
+        pretending anymore — until this town was mine enough that I could stop looking over my shoulder. That's
+        all any of us ever wanted. Somewhere to finally stop running.<br><br>
+        So go on. Take it all apart. Prove, one more time, that there was never going to be a place for us
+        anywhere."
+      </div>
+      <p><b>If a player mentions Willa by name,</b> let Maren stop mid-speech.</p>
+      <div class="monologue">
+        "...Willa was never supposed to happen. That was never — I wasn't there. I want you to know I wasn't
+        there. That doesn't undo it. I know that doesn't undo it." <i>(A beat. She doesn't finish justifying
+        herself this time.)</i>
+      </div>
+
+      <h4>The Fight</h4>
+      <p><a href="#monster-elder">Old Maren, the Elder Doppelganger</a> plus one standard
+      <a href="#monster-doppelganger">Doppelganger</a> (the Room 1 guard, if it survived, or a second lesser
+      cell member). See <a href="#dmtips">DM Tips</a> for scaling this down for a cautious table.</p>
+
+      <div class="riff">
+        <span class="label">DM Riffing Notes — Mid-Fight Twist</span>
+        Once per fight, have Maren use <b>Mask Swap</b> (see her <a href="#monster-elder">stat block</a>) to
+        briefly take the appearance of a PC — purely visual chaos, not a mechanical change — for one gloriously
+        confusing round.
+      </div>
+
+      <h4>Mercy Option — "Corin" and "Elsbet"</h4>
+      <p>If the lesser doppelgangers are given a real chance to surrender rather than being attacked on sight
+      (see their entries under <a href="#npc-corin">Corin</a> and <a href="#npc-elsbet">Elsbet</a>), they break
+      down and beg not to be killed — they never wanted to hurt Garrick, and in "Elsbet's" case, genuinely grew
+      fond of the role over the month she played it. This is your table's version of a redemption arc: not every
+      doppelganger has to die for the story to resolve.</p>
+
+      <h4>If Old Maren Is Destroyed</h4>
+      <p>The cell scatters or is defeated with her. The party finds the real Maren, Corin, and Elsbet in Room 2 —
+      alive, disoriented, deeply grateful. Willa cannot be saved; play her loss as a genuine cost of the mystery
+      running as long as it did before the party arrived.</p>
+
+      <h4 id="maren-ledger">Maren's Real Ledger (Found in Room 3)</h4>
+      <p>Tucked beneath a loose floorboard near the ichor pool is a small, water-stained leather journal — the
+      one document Old Maren kept for herself instead of destroying. Most of it is in plain Common; a few
+      entries slip into a private shorthand of her own invention (DC 15 Investigation or Linguistics to fully
+      decode). Don't gate the emotional weight behind the check, though — the gist reads clearly even
+      untranslated. Read whichever entries fit your table's pace; you don't need all of them.</p>
+      <div class="readaloud">
+        <span class="label">Handout — Selected Entries</span>
+        <p><i>Thornwick Hollow, six years past.</i> Stayed four seasons. A child noticed first, the way children
+        always do — something about how I laughed not matching how I used to. We left before the torches came.
+        I do not let myself think of Thornwick.</p>
+        <p><i>Bellcaster, four years past.</i> Longer, that time. Seven of us, woven properly into the town — a
+        magistrate, two guardsmen, a baker, myself. An outside inquisitor found us, not the town. We fought.
+        Four of us didn't leave Bellcaster. I have not tried a town that size again.</p>
+        <p><i>The Reedmarsh Camps, two years past.</i> Too small to be worth staying. Wore three faces in a
+        single season and left no one behind me. The easiest year I've had in a decade. Also the loneliest.</p>
+        <p><i>Millbrook, these last two months.</i> The longest deliberate stay I've allowed myself in ten
+        years. Small enough to learn completely. Far enough from any city that no one comes looking. I am Maren
+        more hours of the day now than I am myself. I did not expect that to feel like relief.</p>
+        <p><i>Undated, the hand shakier than the rest.</i> An outsider asked too many kind questions today. I
+        used to always be able to tell the difference between someone who is merely curious and someone who has
+        already decided what they'll find in me. I could not tell, this time. I don't know if that means I've
+        gotten worse at this. Or if it means some part of me finally wants to be caught.</p>
+      </div>
+      <p><b>Use for:</b> a gut-punch coda if the party reads it after the fight, and a built-in hook for a
+      sequel — Thornwick Hollow, Bellcaster, and the Reedmarsh Camps are all real places you can seed elsewhere
+      in your world, each with its own leftover doppelganger presence (or absence) waiting to be explored.</p>
+
+      <h4>Epilogue Beats to Offer</h4>
+      <ul>
+        <li>The real Maren reopens the Sleeping Otter within the week — a quietly emotional, low-key scene if
+        the party stops back in before leaving town.</li>
+        <li>Garrick pays out in full and throws in a standing invitation to Millbrook, seeding future
+        adventures.</li>
+        <li>If the party brings <a href="#willa-fate">Willa's unfinished gown</a> back to town, Widow Hask
+        recognizes it and confirms it was meant for Hobb's newborn granddaughter — a quiet, devastating
+        gut-punch beat to close on before moving to lighter epilogue business.</li>
+        <li>A loose thread for later: was this cell alone, or was it a scout sent ahead of a larger group still
+        looking for somewhere to finally settle?</li>
+      </ul>
+    </section>
+
+    <section id="npcs">
+      <h2 class="section-head" style="border:none; padding:0;">People of Note</h2>
+
+      <h3 id="npc-garrick">Garrick Ostler</h3>
+      <p><i>Miller, quest giver — <span class="badge real">Real</span></i></p>
+      <p>Anxious, grieving, and easy to dismiss as an overprotective father — which is exactly why nobody else
+      in town has taken him seriously. His daughter Elsbet was replaced about a month ago. He doesn't suspect
+      <a href="#npc-maren">Old Maren</a> at all, which is the whole point of her cover.</p>
+      <p><b>Voice:</b> apologizes for how he sounds, then says the true thing anyway.</p>
+
+      <h3 id="npc-elsbet">"Elsbet" Ostler</h3>
+      <p><i>Miller's daughter — <span class="badge fake">Doppelganger</span></i></p>
+      <p>Quiet, a little too agreeable, a lesser member of the cell. Unlike Old Maren, she isn't senior enough to
+      fully mask the wrongness — see <a href="#act3">Tell 2</a>. If cornered and given the chance to surrender
+      (rather than being attacked on sight), she breaks — she's grown genuinely fond of Garrick over the month
+      she's spent as his daughter, and never wanted him hurt. See the <a href="#act5">mercy option</a>.</p>
+
+      <h3 id="npc-corin">"Corin" Ashwell</h3>
+      <p><i>Blacksmith — <span class="badge fake">Doppelganger</span></i></p>
+      <p>Gruff, avoids the forge whenever possible — see <a href="#act3">Tell 1</a>. A lesser cell member with
+      less emotional attachment to his role than "Elsbet"; more likely to flee or fight than surrender, but the
+      option should still be on the table if players offer it.</p>
+
+      <h3 id="npc-maren">Old Maren</h3>
+      <p><i>Innkeeper, the party's trusted guide — <span class="badge fake">Doppelganger (cell leader)</span></i></p>
+      <p>Warm, endlessly helpful, and the emotional engine of the whole session — she feeds the party real (if
+      selective) clues for two hours before <a href="#act4">the reveal</a>. She has almost no tell before then:
+      she never eats or drinks in front of guests, always "already ate" or "stepping out back," and deflects
+      rather than fails any lie-detection attempt (see <a href="#act2">DM Riffing Notes</a>). Full combat stats
+      at <a href="#monster-elder">Old Maren, the Elder Doppelganger</a>.</p>
+
+      <h3 id="npc-tomas">Tomas Wick</h3>
+      <p><i>Town drunk — <span class="badge real">Real</span></i></p>
+      <p>Rambling and ignored by everyone, but the only person in Millbrook who actually saw a swap happen. Good
+      for an unprompted nudge if the party stalls — he'll seek them out again if they haven't followed up on his
+      story.</p>
+
+      <h3 id="npc-aldwin">Brother Aldwin</h3>
+      <p><i>Village priest — <span class="badge real">Real</span></i></p>
+      <p>Calm and genuinely kind — deliberately kept uninfected so the table has at least one NPC they can trust
+      without a second thought, rather than spiraling into suspecting everyone. Can offer healing support if the
+      party recruits him for <a href="#act5">the final fight</a>.</p>
+
+      <h3 id="npc-fenwick">Fenwick the Lookout</h3>
+      <p><i>Millhouse entrance guard — <span class="badge real">Real</span></i></p>
+      <p>A destitute drifter Old Maren pays in coin and hot food to sit near the Old Millhouse and whistle a
+      warning if anyone approaches. He has no idea what's actually inside — he's been told it's a "family
+      dispute" and paid well enough not to ask twice. Cowardly rather than dangerous: he'll flee or surrender the
+      moment it's clear he's outmatched, and knows nothing useful about the doppelgangers beyond "the nice
+      innkeeper pays me to sit here."</p>
+      <p><b>Voice:</b> nervous, apologetic, over-explains himself. Wants no part of a real fight.</p>
+
+      <h3 id="npc-willa">Willa Thorne</h3>
+      <p><i>Seamstress, first victim — <span class="badge real">Real (deceased)</span></i></p>
+      <p>Full details, including how and why she died, are under <a href="#act4">Act 4, Room 2</a> and
+      <a href="#clues">Clues &amp; Handouts</a>. She's the session's grief beat — the proof that this cell's
+      patience has limits, and that Old Maren's claim to have "never wanted anyone hurt" isn't quite true.</p>
+    </section>
+
+    <section>
+      <h2 class="section-head">Bestiary</h2>
+
+      <div class="actbar">Act 3 · The Detour (Non-Doppelganger Fight)</div>
+      <div class="statblock" id="monster-bandits">
+        <div class="namerow">
+          <h4 class="name">Millbrook Road Bandit</h4>
+          <span class="cr">CR 1/8 each</span>
+        </div>
+        <div class="type">Medium humanoid (any race), any non-lawful alignment</div>
+        <div class="chiprow">
+          <span class="chip">AC 12</span>
+          <span class="chip">HP 11 (2d8+2)</span>
+          <span class="chip">Speed 30 ft.</span>
+        </div>
+        <p><b>Scimitar.</b> Melee Weapon Attack: +3 to hit, reach 5 ft. Hit: 4 (1d6+1) slashing damage.</p>
+        <p><b>Light Crossbow.</b> Ranged Weapon Attack: +3 to hit, range 80/320 ft. Hit: 5 (1d8+1) piercing
+        damage.</p>
+        <p class="scaling">Run 3–4 for a light-medium fight for 4–5 level 3–4 characters. Add one
+        <b>Bandit Captain</b> (AC 15, HP 65, Multiattack: two scimitars +5 to hit 1d6+3, Parry reaction) if your
+        table wants a tougher scrap. These are entirely mundane people — no shapechanging, no ichor, nothing
+        supernatural. That's the point: not every danger in the world is a doppelganger, and the party needs at
+        least one fight this session that resolves as simply as "we won."</p>
+      </div>
+
+      <div class="actbar">Act 4 · Lesser Cell Members</div>
+      <div class="statblock" id="monster-doppelganger">
+        <div class="namerow">
+          <h4 class="name">Doppelganger</h4>
+          <span class="cr">CR 3 (700 XP)</span>
+        </div>
+        <div class="type">Medium monstrosity (shapechanger), unaligned</div>
+        <div class="chiprow">
+          <span class="chip">AC 14</span>
+          <span class="chip">HP 52 (8d8+16)</span>
+          <span class="chip">Speed 30 ft.</span>
+        </div>
+        <div class="stats-row">
+          <div><b>STR</b>11 (+0)</div><div><b>DEX</b>18 (+4)</div><div><b>CON</b>14 (+2)</div>
+          <div><b>INT</b>11 (+0)</div><div><b>WIS</b>12 (+1)</div><div><b>CHA</b>14 (+2)</div>
+        </div>
+        <p><b>Skills</b> Deception +6, Insight +3 &nbsp; <b>Condition Immunities</b> charmed &nbsp;
+        <b>Senses</b> darkvision 60 ft., passive Perception 11 &nbsp; <b>Languages</b> Common</p>
+        <hr>
+        <p><b>Shapechanger.</b> Can polymorph into a Small or Medium humanoid it has seen (or back), as an
+        action. Stats stay the same. Reverts to true form when it dies — see <a href="#act4">Tell 3</a>.</p>
+        <p><b>Ambusher.</b> Advantage on attack rolls against any creature it surprised, in the first round.</p>
+        <p><b>Surprise Attack.</b> If it surprises a creature and hits with an attack in the first round, the
+        target takes an extra 10 (3d6) damage.</p>
+        <hr>
+        <p><b>Multiattack.</b> Two slam attacks.</p>
+        <p><b>Slam.</b> Melee Weapon Attack: +4 to hit, reach 5 ft. Hit: 7 (1d6+4) bludgeoning damage.</p>
+        <p><b>Read Thoughts.</b> Reads surface thoughts of one creature within 60 ft. (blocked by 2 ft. of
+        rock/wood/dirt or 2 in. of metal). Advantage on Insight, Deception, Intimidation, and Persuasion checks
+        against that target while reading.</p>
+        <p class="scaling">Use this stat block as-is for "Corin" and "Elsbet" if either is fought rather than
+        talked down. Prefer having them flee back to warn <a href="#npc-maren">Maren</a> rather than die
+        on-screen here — see the note in <a href="#act3">Act 3</a> about saving the true-form reveal for the
+        climax.</p>
+      </div>
+
+      <div class="actbar">Act 5 · Final Fight</div>
+      <div class="statblock" id="monster-elder">
+        <div class="namerow">
+          <h4 class="name">Old Maren, the Elder Doppelganger</h4>
+          <span class="cr">CR 5 (custom)</span>
+        </div>
+        <div class="type">Medium monstrosity (shapechanger), unaligned</div>
+        <div class="chiprow">
+          <span class="chip">AC 15</span>
+          <span class="chip">HP 90 (12d8+36)</span>
+          <span class="chip">Speed 30 ft.</span>
+        </div>
+        <div class="stats-row">
+          <div><b>STR</b>13 (+1)</div><div><b>DEX</b>18 (+4)</div><div><b>CON</b>16 (+3)</div>
+          <div><b>INT</b>13 (+1)</div><div><b>WIS</b>14 (+2)</div><div><b>CHA</b>17 (+3)</div>
+        </div>
+        <p><b>Skills</b> Deception +9, Insight +6, Persuasion +7 &nbsp; <b>Condition Immunities</b> charmed &nbsp;
+        <b>Senses</b> darkvision 60 ft., passive Perception 12 &nbsp; <b>Languages</b> Common, Thieves' Cant</p>
+        <hr>
+        <p><b>Shapechanger, Ambusher, Surprise Attack</b> — as standard <a href="#monster-doppelganger">
+        Doppelganger</a>, above.</p>
+        <p><b>Perfect Mimicry.</b> Advantage on checks to maintain a disguised identity, including voice and
+        mannerisms. Creatures who don't already suspect her need a DC 17 Insight check to notice anything wrong,
+        even under direct scrutiny.</p>
+        <p><b>Unravel (Reaction, 1/turn).</b> When hit by an attack (before damage is rolled), Maren can shift
+        her form mid-motion, imposing disadvantage on that attack roll retroactively.</p>
+        <hr>
+        <p><b>Multiattack.</b> Three slam attacks.</p>
+        <p><b>Slam.</b> Melee Weapon Attack: +7 to hit, reach 5 ft. Hit: 9 (1d8+4) bludgeoning damage.</p>
+        <p><b>Read Thoughts.</b> As standard doppelganger.</p>
+        <p><b>Mask Swap (1/day).</b> As an action, instantly looks exactly like a creature she can see within
+        30 ft. (visual only — no stat change). A great "which one is really her" beat for one chaotic round —
+        see <a href="#act5">DM Riffing Notes</a>.</p>
+        <p class="scaling">Tuned for a hard-but-winnable finale against 4–5 level 3–4 characters. Drop the extra
+        Doppelganger add for a cautious table, or reduce HP to ~65 if the fight is dragging.</p>
+      </div>
+
+      <div class="actbar">Optional</div>
+      <div class="statblock" id="monster-filler">
+        <div class="namerow">
+          <h4 class="name">Giant Rat Swarm (Filler)</h4>
+          <span class="cr">CR 1/4 each</span>
+        </div>
+        <div class="type">Small beast, unaligned</div>
+        <div class="chiprow">
+          <span class="chip">AC 12</span>
+          <span class="chip">HP 7 (2d6)</span>
+          <span class="chip">Speed 30 ft.</span>
+        </div>
+        <p><b>Bite.</b> +4 to hit, 4 (1d4+2) piercing damage.</p>
+        <p class="scaling">Use 2–3 in the millhouse's lower level as a light warm-up if <a href="#timeline">
+        pacing</a> runs short. Skip entirely if you're already running long.</p>
+      </div>
+    </section>
+
+    <section id="millbrook-locals">
+      <h2 class="section-head">Locals &amp; Landmarks of Millbrook</h2>
+      <p>A few concrete places and faces to make the town feel lived-in. None of this needs to come up in
+      order — use whatever fits the moment.</p>
+
+      <h3>Places to Visit</h3>
+      <table>
+        <tr><th>Location</th><th>What's There</th></tr>
+        <tr><td><b>The Sleeping Otter Inn</b></td><td>Warm, welcoming, run by <a href="#npc-maren">Old Maren</a>.
+        Free meals and gossip for the party. The session's home base.</td></tr>
+        <tr><td><b>The Rusted Anvil</b></td><td>"Corin's" smithy — tools hung wrong, a commission untouched for
+        weeks.</td></tr>
+        <tr><td><b>The Ostler Mill</b></td><td>Garrick and "Elsbet's" home — grey ichor residue on the
+        windowsill.</td></tr>
+        <tr><td><b>Tomas's Shack</b></td><td>Cluttered, smells of drink, but honest — this is where his testimony
+        lives.</td></tr>
+        <tr><td><b>The Millbrook Chapel</b></td><td>Brother Aldwin's small shrine. A safe, quiet place for the
+        party to regroup and think out loud.</td></tr>
+        <tr><td><b>The Market Green</b></td><td>The town's open square — dried goods, gossip, and a good place to
+        overhear rumors about "how odd everyone's been."</td></tr>
+      </table>
+    </section>
+
+    <section id="ordinary-folk">
+      <h2 class="section-head">The Ordinary Townsfolk</h2>
+      <p>Not everyone in Millbrook is a doppelganger, a victim, or plot-relevant — most of the town is exactly
+      what it looks like. Use these for texture, comic relief, and to keep the party from spiraling into
+      suspecting literally everyone.</p>
+      <ul>
+        <li><b>Widow Hask</b> — runs the market stall, gossips constantly, entirely real, entirely harmless.
+        Will absolutely try to sell the party "lucky" charms at triple price.</li>
+        <li><b>Pip</b> — a miller's boy, maybe nine, obsessed with the idea that the party are "real
+        adventurers." Offhandedly mentions his friend's mum "doesn't do the voices for bedtime stories anymore,"
+        which is either nothing or a clue, depending on whether the DM wants to plant a fourth household of
+        interest.</li>
+        <li><b>Old Fennick</b> — half-deaf retired miller, remembers everyone's business from thirty years ago
+        and none of what happened yesterday. Good comic-relief red herring who confidently accuses the wrong
+        person of "acting strange" (they're just having a bad week).</li>
+      </ul>
+    </section>
+
+    <section id="clues">
+      <h2 class="section-head">Clues &amp; Handouts</h2>
+
+      <h4>The Grey Residue</h4>
+      <p>Smeared along Elsbet's windowsill: cool, faintly damp, somewhere between ash and jelly. A PC who later
+      sees a doppelganger revert to true form (<a href="#act4">Tell 3</a>) will recognize this as the same
+      substance — a satisfying "click" if you let them make the connection themselves rather than stating it.</p>
+
+      <h4>Tomas's Testimony (handout)</h4>
+      <p><i>"I saw her walk into her own house while she was already inside it. Same face. Same walk. I know how
+      it sounds."</i></p>
+
+      <h4>The Disappearance Ledger</h4>
+      <p>Garrick's own careful notes (he's the type to keep records) show all four disappearances cluster within
+      a few days of a "traveling merchant" passing through Millbrook a month ago — the doppelganger cell's
+      arrival.</p>
+
+      <h4>Willa's Unfinished Gown</h4>
+      <p>A small christening gown, half-stitched, found beside <a href="#npc-willa">Willa's</a> body in Room 2 —
+      see <a href="#willa-fate">her full story</a>. Nobody in town knows yet who it was for; that reveal lands
+      best back in Millbrook during <a href="#act5">the resolution</a>, not in the lair itself.</p>
+    </section>
+
+    <section id="checks">
+      <h2 class="section-head">Skill Checks by Locale</h2>
+      <p>A quick lookup for every check that's likely to come up, organized by where the party is when it
+      happens. Two rules of thumb: don't call for a roll when the fun answer is "yes, obviously" (most of the
+      <a href="#act3">Tells</a> should land through narration, not dice), and never let a failed check fully
+      block a lead — worst case, give a partial or delayed version of the information instead of a flat no.</p>
+
+      <table>
+        <tr><th>Where</th><th>Check</th><th>DC</th><th>What It Reveals / Does</th></tr>
+        <tr><td><a href="#act2">Act 2 — anywhere in town</a></td><td>No roll (narration only)</td><td>—</td>
+        <td><a href="#act3">Tells 1 &amp; 2</a> should be delivered through what an NPC does, not gated behind a
+        die roll. Reserve rolls for players who explicitly push further (see rows below).</td></tr>
+        <tr><td>Ostler Mill</td><td>Nature or Arcana</td><td>12</td><td>Recognizes the grey residue on the
+        windowsill as unnatural — not yet identifiable as doppelganger ichor unless the character has fought one
+        before.</td></tr>
+        <tr><td>The Rusted Anvil (Tell 1)</td><td>Passive Perception (no roll) or active Investigation</td>
+        <td>10 (12 passive)</td><td>Notices "Corin's" hands have no forge-burn scars — odd for a smith of
+        fifteen years. Give this away for free to anyone with passive Perception 12+; only call for an active
+        roll if a player specifically inspects his hands or tools.</td></tr>
+        <tr><td>Garrick &amp; "Elsbet" (Tell 2)</td><td>Insight (optional)</td><td>13</td><td>If a player wants
+        to actively study her reaction to the "Bumblebee" nickname rather than just noticing it narratively,
+        this confirms something's off. Not required — the scene works fine with no roll at all.</td></tr>
+        <tr><td>Road to the New Mill (Detour)</td><td>Wisdom (Perception)</td><td>13</td><td>Notices the
+        <a href="#monster-bandits">bandit</a> ambush before it triggers; failure means the bandits get their
+        <a href="#monster-bandits">Ambusher</a>-style surprise round instead.</td></tr>
+        <tr><td>Old Millhouse, Room 1</td><td>Stealth (opposed by Fenwick's passive Perception 10), or
+        Persuasion / Deception / Intimidation</td><td>~12–13</td><td>Sneak past <a href="#npc-fenwick">
+        Fenwick</a> unnoticed, talk or bribe your way past him, or scare him into fleeing without a fight — all
+        three are valid non-lethal solutions to this room.</td></tr>
+        <tr><td>Old Millhouse, sticky ichor patch</td><td>Dexterity save</td><td>12</td><td>Avoid falling prone
+        and alerting anyone nearby in the millhouse.</td></tr>
+        <tr><td>Old Millhouse, holding cell door</td><td>Thieves' Tools (or use the key taken from Fenwick)</td>
+        <td>12</td><td>Opens the cell holding the real Maren, Corin, Elsbet, and Petyr.</td></tr>
+        <tr><td>Anywhere, on Old Maren directly (Acts 2–4)</td><td>Insight</td><td>17</td><td>Per her
+        <a href="#monster-elder">Perfect Mimicry</a> trait, this should be rare and hard — by design, almost no
+        one should crack her before <a href="#act4">the reveal</a>. If a player rolls this high early, have her
+        deflect rather than fail outright (see <a href="#act2">DM Riffing Notes</a>).</td></tr>
+        <tr><td>Room 3, Maren's ledger</td><td>Investigation or Linguistics</td><td>15</td><td>Fully decodes the
+        shorthand passages in <a href="#maren-ledger">her journal</a>. The emotional gist is legible without the
+        roll — this only matters for the extra worldbuilding detail.</td></tr>
+      </table>
+    </section>
+
+    <section id="loot">
+      <h2 class="section-head">Loot &amp; Rewards</h2>
+
+      <h3>From the Old Millhouse</h3>
+      <table>
+        <tr><th>Item</th><th>Notes</th></tr>
+        <tr><td><b>A drop of true ichor, stoppered</b></td><td>Inert once removed from a living doppelganger.
+        Alchemists will pay well for it; flavorful, not combat-swingy.</td></tr>
+        <tr><td><b><a href="#maren-ledger">Maren's real ledger</a></b></td><td>Full text under <a href="#act5">
+        Act 5</a> — names three prior towns her cell passed through before Millbrook. A hook for a future
+        adventure.</td></tr>
+        <tr><td><b>A stack of forged travel papers</b></td><td>Blank, half-finished — proof of how long the cell
+        had been planning to stay for good.</td></tr>
+      </table>
+
+      <h3>Story Rewards</h3>
+      <table>
+        <tr><th>Reward</th><th>Notes</th></tr>
+        <tr><td>Garrick's payment</td><td>50 gp/PC total, plus free milling services for a year.</td></tr>
+        <tr><td>Millbrook's goodwill</td><td>Free lodging at the (real) Sleeping Otter Inn on future visits.</td></tr>
+        <tr><td>A standing invitation</td><td>Seeds a return visit or a sequel one-shot chasing the rest of the
+        cell's network.</td></tr>
+      </table>
+    </section>
+
+    <section id="dmtips">
+      <h2 class="section-head">DM Tips</h2>
+      <ul>
+        <li><b>Protect the pivot.</b> Acts 1–2 should feel genuinely cozy. Don't let paranoia leak in too early —
+        save the real dread for <a href="#act4">Act 4</a> so the reveal actually lands.</li>
+        <li><b>Old Maren is the emotional core.</b> Even players who don't care about the mystery mechanics will
+        care about having trusted her. Keep her warm and consistent for as long as possible before the
+        <a href="#act4">unmasking</a>.</li>
+        <li><b>Deliver tells through roleplay, not checks.</b> Say what the NPC does rather than gating it behind
+        a die roll — reward attentive players without punishing distracted ones.</li>
+        <li><b>Running long?</b> Cut the <a href="#monster-filler">optional filler fight</a> in Act 4 entirely.</li>
+        <li><b>Running short?</b> Add a short scene with <a href="#npc-aldwin">Brother Aldwin</a> in Act 2 —
+        quiet, unsettling in a different register than the fights, and buys time.</li>
+        <li><b>Mercy matters.</b> If players offer "Corin" or "Elsbet" the chance to surrender, let it land as a
+        real moral beat, not a wasted turn — see the <a href="#act5">mercy option</a>.</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
