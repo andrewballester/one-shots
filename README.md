@@ -128,3 +128,83 @@ section by section, keep the CSS and nav skeleton, and rebuild from §1 of this 
    bottom), then Loot & Rewards, then a DM Tips list summarizing anything you had to explain twice while
    writing.
 7. Sanity-check every `id=` has a matching `href="#..."` and vice versa before calling it done.
+
+## 8. Pregenerated Character Sheets
+
+The `pregenned-characters/` directory contains a full set of level 3 one-shot characters, one per PHB class. Use them when players arrive without a character or want to jump straight into play.
+
+### File Structure
+
+```
+pregenned-characters/
+  index.html          ← landing page with card grid (link here from your one-shot wiki)
+  barbarian.html      ← Grimtusk Ironskin (Half-Orc, Berserker, Outlander)
+  bard.html           ← Lyria Ashveil (Half-Elf, Lore, Entertainer)
+  cleric.html         ← Brother Aldric (Human Variant, Life, Acolyte)
+  druid.html          ← Sylvara Thornwood (Wood Elf, Circle of Moon, Hermit)
+  fighter.html        ← Cade Stormwall (Human Variant, Champion, Soldier)
+  monk.html           ← Wei Sunstep (Human Variant, Open Hand, Outlander)
+  paladin.html        ← Ser Iona Brightshield (Human Variant, Devotion, Noble)
+  ranger.html         ← Ash Coldwind (Wood Elf, Hunter/Colossus Slayer, Outlander)
+  rogue.html          ← Pip Tumblewhistle (Lightfoot Halfling, Thief, Criminal)
+  sorcerer.html       ← Zara Emberveil (Tiefling, Wild Magic, Sage)
+  warlock.html        ← Dorian Ashcroft (Human Variant, Fiend/Chain, Sailor)
+  wizard.html         ← Mira Starcroft (High Elf, Evocation, Sage)
+  portraits/          ← 600×900 px PNGs, one per class (CC-BY 4.0, Joseph Hewitt)
+```
+
+### Stat Generation Rules
+
+All characters were built on the **standard array** (15, 14, 13, 12, 10, 8), assigned to maximize the class's primary ability. Racial bonuses applied on top. Proficiency bonus +2. All stats are at level 3 with no magic items.
+
+| Thing | Choices made |
+|---|---|
+| Standard array | 15/14/13/12/10/8 — gives a fair, balanced character without requiring a backstory justify |
+| Variant Human feat | Taken for Fighter (Tough), Monk (Mobile), Cleric (War Caster), Paladin (War Caster), Warlock (War Caster) — feats that complement the class without requiring system knowledge to use |
+| HP | Max at level 1, average-rounded-up for levels 2–3, plus CON modifier per level |
+| AC | Best armor the class can wear without penalty, plus shield where it fits the fantasy |
+| Subclasses | Chosen for playability over optimization: Champion (Fighter), Open Hand (Monk), Life (Cleric), Circle of Moon (Druid), Lore (Bard), Fiend/Chain (Warlock), Hunter/Colossus Slayer (Ranger), Thief (Rogue), Wild Magic (Sorcerer), Devotion (Paladin), Berserker (Barbarian), Evocation (Wizard) |
+
+### Sheet Template (CSS Classes)
+
+Each sheet shares the same CSS skeleton as the one-shot wikis (warm parchment palette, sticky left nav with `.active` on current sheet, `@media print` hides nav). Additional classes unique to character sheets:
+
+- `.quickstats` — row of chips (HP, AC, Speed, Initiative, etc.)
+- `.ability-box` — 6-column grid for STR/DEX/CON/INT/WIS/CHA with score, modifier, and label
+- `.sheet-grid` — two-column layout (saves/skills left, attacks/equipment right)
+- `.prof-list` — save and skill list; `.prof` subclass adds filled bullet ●; expertise uses ◆ prefix in `fdesc` text
+- `table.atk` — attacks table (weapon, to-hit, damage, notes)
+- `.sslot` — spell slot chip (level + count)
+- `.spell-list` — spell list with `.slvl` pill per entry
+- `.statblock` — embedded NPC/beast stat block (e.g., Wild Shape forms, familiars)
+- `.quirk` — purple dashed-border box for the once-per-long-rest character quirk
+- `.portrait` — float-right character portrait (155px wide in browser, 110px in print)
+- `.personality` — 2-column grid for trait/ideal/bond/flaw
+
+### The Character Quirk
+
+Each character has a once-per-long-rest ability in a `.quirk` box — silly, useful, and not game-breaking. These exist to give new players a personal moment that's entirely theirs, distinct from class mechanics. Design guidelines:
+
+- **Thematically tied** to the character's background or personality, not just the class
+- **One sentence activation** — players should be able to trigger it without reading rules
+- **Doesn't require a slot or resource other than the per-long-rest limit**
+- **Should prompt a table moment** — laughter, a groan, or at minimum someone leaning over to read it
+
+Current quirks: Primal Nose (Barbarian), Earworm (Bard), Mild Prophecy (Cleric), Local Gossip (Druid), Not Today (Fighter), Flying Entrance (Monk), Inspiring Speech (Paladin), I Know a Shortcut (Ranger), Oh This Old Thing (Rogue), Controlled Misfire (Sorcerer), The Imp Knows Things (Warlock), Excessive Footnote (Wizard).
+
+### Portraits
+
+Portraits are sourced from **Joseph Hewitt's Fantasy RPG Portrait Set 1** (opengameart.org, CC-BY 4.0). Each sheet links to `portraits/CLASSNAME.png` (relative path) and includes a footer attribution line. To replace a portrait: drop a new PNG at `portraits/CLASSNAME.png` — no other change needed.
+
+**Portrait source:** https://opengameart.org/content/joseph-hewitts-fantasy-rpg-portrait-set-1  
+**License:** CC-BY 4.0 — attribution required: *"Fantasy portraits by Joseph Hewitt (pyrrho12@yahoo.ca)"*
+
+### Adding a New Pregen
+
+1. Copy any existing sheet as a starting point.
+2. Update the `<title>`, `<h1>`, `.char-sub`, and `.char-flavor` for the new character.
+3. Update the `.active` class in `<nav>` to point at the new file (or add a new nav entry if it's a new class).
+4. Fill in stats using the standard array and the class's primary ability priority.
+5. Add a `portraits/CLASSNAME.png` — 600×900 px looks best, portrait orientation.
+6. Add a `.quirk` box — one sentence to trigger, personal to the character, mildly absurd.
+7. Link the new sheet from `index.html` as a card in the appropriate section.

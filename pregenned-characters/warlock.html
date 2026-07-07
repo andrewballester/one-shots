@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dorian Ashcroft — Level 3 Warlock Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li:not(.prof){color:var(--ink-soft);}
+  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .spell-slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+  .sslot{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 10px;text-align:center;}
+  .sslot .sv{font-size:17px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .sslot .sl{font-size:9.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .spell-list{list-style:none;padding:0;margin:0;}
+  .spell-list li{font-size:13px;padding:2.5px 0;border-bottom:1px dotted var(--line);}
+  .spell-list li:last-child{border-bottom:none;}
+  .slvl{display:inline-block;background:var(--chip);border-radius:999px;font-size:10px;padding:1px 6px;color:var(--ink-soft);margin-right:4px;}
+  .statblock{background:var(--panel);border:2px solid var(--accent-soft);border-radius:7px;padding:12px 14px;margin-top:8px;}
+  .statblock .sbname{font-size:15px;font-weight:bold;color:var(--accent);}
+  .statblock .sbsub{font-size:11.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:5px 0;}
+  .chip{background:var(--chip);border:1px solid var(--line);border-radius:4px;padding:3px 7px;font-size:12px;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html">Fighter</a>
+  <a href="monk.html">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html">Bard</a>
+  <a href="cleric.html">Cleric</a>
+  <a href="druid.html">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html" class="active">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/warlock.png" class="portrait" alt="Dorian Ashcroft portrait">
+  <h1 class="char-name">Dorian Ashcroft</h1>
+  <div class="char-sub">Human (Variant) · Warlock 3 · The Fiend · Sailor · Feat: War Caster · Pact of the Chain</div>
+  <div class="char-flavor">"I made a deal. I have no illusions about what that means — I just intend to be the one who walks away from it."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">13</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">24</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">30 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+1</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">12</div><div class="lbl">Passive Perc.</div></div>
+    <div class="qstat"><div class="val">+5</div><div class="lbl">Spell Attack</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Spell DC</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px;">AC = Studded leather (12+DEX). Pact Magic: 2nd-level slots only; both recover on a <strong>short rest</strong>. At level 3 you cast everything at 2nd level.</div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">13</div><div class="amod">+1</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">15</div><div class="amod">+2</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li><span>Strength</span><span class="pval">−1</span></li>
+          <li><span>Dexterity</span><span class="pval">+1</span></li>
+          <li><span>Constitution</span><span class="pval">+2</span></li>
+          <li><span>Intelligence</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Wisdom</span><span class="pval">+2</span></li>
+          <li class="prof"><span>Charisma</span><span class="pval">+5</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills</h3>
+        <ul class="prof-list">
+          <li class="prof"><span>Arcana (INT)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Athletics (STR)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Deception (CHA)</span><span class="pval">+5</span></li>
+          <li><span>History (INT)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Intimidation (CHA)</span><span class="pval">+5</span></li>
+          <li><span>Investigation (INT)</span><span class="pval">+1</span></li>
+          <li><span>Nature (INT)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Perception (WIS)</span><span class="pval">+2</span></li>
+          <li><span>Persuasion (CHA)</span><span class="pval">+3</span></li>
+          <li><span>Stealth (DEX)</span><span class="pval">+1</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Weapon / Cantrip</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Eldritch Blast</td><td>+5</td><td>1d10+3 force</td><td>Cantrip; range 120 ft; +3 from Agonizing Blast</td></tr>
+          <tr><td>Dagger</td><td>+3</td><td>1d4+1 piercing</td><td>Melee or thrown 20/60</td></tr>
+          <tr><td>Imp (familiar)</td><td>+5</td><td>1d4+3 pierce + 3d4 poison</td><td>See stat block below; CON save DC 11 for half poison</td></tr>
+        </table>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Studded leather armour</li>
+          <li>Dagger</li>
+          <li>Arcane focus (twisted wand)</li>
+          <li>Scholar's pack</li>
+          <li>Navigator's tools (Sailor background)</li>
+          <li>25 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Feat: War Caster</h3>
+        <div class="fdesc">Advantage on CON saves to maintain concentration spells. Can perform somatic components with weapons in hand. Can cast spells (like Eldritch Blast) as opportunity attacks.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Class Features</h2>
+
+    <div class="feature">
+      <span class="fname">Pact Magic</span>
+      <div class="fdesc">You have 2 spell slots, both 2nd level. <strong>They recover on a short rest (10 minutes).</strong> Unlike other casters, every spell you cast uses 2nd-level slots — this makes all your spells slightly more powerful, but you have far fewer of them. Manage them like ammunition: use, short rest, reload.</div>
+      <div class="tip"><strong>New player tip:</strong> You are a cantrip-focused character who occasionally drops a big spell. Spam Eldritch Blast for free (no slot), then use your 2 slots for Hex or Hold Person. Short rest between every fight possible to recharge.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Eldritch Blast + Agonizing Blast</span>
+      <div class="fdesc"><strong>Eldritch Blast:</strong> your main attack cantrip — +5 to hit, 1d10 force at 120 ft. Free, infinite uses. <strong>Agonizing Blast (invocation):</strong> add your CHA modifier (+3) to the damage = 1d10+3 per blast. At level 3, one beam per attack action (two beams at level 5).</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Devil's Sight</span><span class="fuses">Eldritch Invocation</span>
+      <div class="fdesc">You can see normally in magical and non-magical darkness to a range of 120 ft. This is dramatic: cast Darkness (2nd-level, from your spell list) on yourself, then shoot through it — enemies are blinded, you can see everything.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Pact of the Chain</span><span class="fuses">Pact Boon</span>
+      <div class="fdesc">You have learned the Find Familiar spell and can cast it as a ritual. Your familiar can be an Imp, Pseudodragon, Quasit, or Sprite (special forms not available to wizards). You can see through your familiar's eyes and hear through its ears. When you take the Attack action, your familiar can also attack as a bonus action (using its own stats). You can deliver touch spells through your familiar.</div>
+      <div class="tip"><strong>New player tip:</strong> Keep the Imp in human form as your "advisor" NPC. In combat, order it to attack as your bonus action for extra damage. It can also turn invisible and scout.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Dark One's Blessing</span><span class="fuses">The Fiend</span>
+      <div class="fdesc">When you reduce a hostile creature to 0 HP, you gain temporary HP equal to your CHA modifier + your warlock level = 3+3 = 6 temporary HP. These stack (to a max) if you keep killing things.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Imp Familiar — Pact of the Chain</h2>
+    <div class="statblock">
+      <div class="sbname">Imp</div>
+      <div class="sbsub">Tiny Fiend · CR 1/4 · Familiar (bonus action to command it to attack after you take Attack action)</div>
+      <div class="chiprow">
+        <span class="chip"><b>HP</b> 10</span>
+        <span class="chip"><b>AC</b> 13</span>
+        <span class="chip"><b>Speed</b> 20 ft / fly 40 ft</span>
+      </div>
+      <div class="fdesc" style="margin-top:6px;">
+        <strong>Sting.</strong> +5 to hit, 1d4+3 piercing + 3d4 poison (CON save DC 11 half poison).<br>
+        <strong>Invisibility.</strong> Action; remains invisible until it attacks or you dismiss it.<br>
+        <strong>Shapechanger.</strong> Can look like a raven, rat, or spider (same stats).<br>
+        <strong>Magic Resistance.</strong> Advantage on saves against spells and magical effects.<br>
+        <strong>Devil's Sight.</strong> Sees through magical darkness.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Spells</h2>
+    <div class="fdesc" style="margin-bottom:8px;"><strong>Pact Magic:</strong> CHA mod (+3). Spell save DC 13. Spell attack +5. 2 slots (2nd level). <strong>Recover on short rest.</strong> You know your spells permanently.</div>
+    <div class="spell-slots">
+      <div class="sslot"><div class="sv">2</div><div class="sl">2nd level (short rest)</div></div>
+    </div>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Cantrips</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">Cantrip</span><strong>Eldritch Blast</strong> — +5, 1d10+3 force, 120 ft. Free, unlimited. Your primary attack every round.</li>
+      <li><span class="slvl">Cantrip</span><strong>Minor Illusion</strong> — Create a sound or image; Investigation DC 13 to disbelieve. Tactical and social use.</li>
+    </ul>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Spells Known (4) — All Cast at 2nd Level</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">2nd slot</span><strong>Armor of Agathys</strong> — 10 temporary HP; whenever a melee attack hits you, deal 10 cold damage back. Lasts until temp HP gone.</li>
+      <li><span class="slvl">2nd slot</span><strong>Hex</strong> — Bonus action; 1 hr concentration; target takes +1d6 necrotic on every hit from you; also has disadvantage on one ability check type. Move to new target as bonus action when marked target dies.</li>
+      <li><span class="slvl">2nd slot</span><strong>Hold Person</strong> — WIS save DC 13; concentration; target paralyzed (can retry each turn). Any attack within 5 ft auto-crits!</li>
+      <li><span class="slvl">2nd slot</span><strong>Misty Step</strong> — Bonus action; teleport 30 ft to a visible space. Escape or repositioning.</li>
+    </ul>
+    <div style="margin-top:8px;"><strong style="font-size:12px;color:var(--accent-soft);">Fiend Expanded List (also available to learn):</strong></div>
+    <ul class="spell-list" style="margin-top:4px;">
+      <li><span class="slvl">Available</span>Burning Hands, Command, Blindness/Deafness, Scorching Ray — on your expanded list; swap in on level-up.</li>
+    </ul>
+    <div class="tip" style="margin-top:8px;"><strong>Tip:</strong> Combat loop: bonus action Hex, action Eldritch Blast. That's 1d10+3+1d6 force/necrotic per hit, for free every round. Save your 2 spell slots for Hold Person (boss fight) or emergencies.</div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">The Imp Knows Things</div>
+    <div class="quirk-desc">You send the Imp familiar to eavesdrop on a conversation happening within 120 ft that you can observe. The Imp returns (in rat or raven form, ideally) and delivers a report: the general topic, one specific name that came up, and whether any money changed hands. The report is accurate. The Imp editorializes. Its opinions about the people it observed are delivered with confidence and are not always charitable. You've learned to request just the facts first, then ask for its thoughts as a separate step if you want them.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">I've seen enough to know that the most dangerous things wear the friendliest faces.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Power. Knowledge alone isn't enough — you need the strength to act on it.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">The fiend that granted my power holds something I desperately need. One day I'll be strong enough to take it back.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">I see every situation as a transaction. Nothing is free, and kindness usually hides a price.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>

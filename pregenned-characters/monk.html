@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wei Sunstep — Level 3 Monk Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li:not(.prof){color:var(--ink-soft);}
+  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .ki-track{display:flex;gap:10px;align-items:center;margin:6px 0;}
+  .ki-box{width:28px;height:28px;border:2px solid var(--accent-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--accent-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html">Fighter</a>
+  <a href="monk.html" class="active">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html">Bard</a>
+  <a href="cleric.html">Cleric</a>
+  <a href="druid.html">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/monk.png" class="portrait" alt="Wei Sunstep portrait">
+  <h1 class="char-name">Wei Sunstep</h1>
+  <div class="char-sub">Human (Variant) · Monk 3 · Way of the Open Hand · Outlander · Feat: Mobile</div>
+  <div class="char-flavor">"Speed is not about running away. It is about arriving before they understand the danger."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">15</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">21</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">50 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+3</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">12</div><div class="lbl">Passive Perc.</div></div>
+    <div class="qstat"><div class="val">3</div><div class="lbl">Ki Points</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Ki Save DC</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px;">AC = Unarmored Defense (10+DEX+WIS). Speed = 30 base + 10 Unarmored Movement + 10 Mobile feat = 50 ft!</div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">13</div><div class="amod">+1</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">15</div><div class="amod">+2</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li class="prof"><span>Strength</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Dexterity</span><span class="pval">+5</span></li>
+          <li><span>Constitution</span><span class="pval">+1</span></li>
+          <li><span>Intelligence</span><span class="pval">+0</span></li>
+          <li><span>Wisdom</span><span class="pval">+2</span></li>
+          <li><span>Charisma</span><span class="pval">−1</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills</h3>
+        <ul class="prof-list">
+          <li class="prof"><span>Acrobatics (DEX)</span><span class="pval">+5</span></li>
+          <li class="prof"><span>Athletics (STR)</span><span class="pval">+3</span></li>
+          <li><span>History (INT)</span><span class="pval">+0</span></li>
+          <li class="prof"><span>Insight (WIS)</span><span class="pval">+4</span></li>
+          <li><span>Perception (WIS)</span><span class="pval">+2</span></li>
+          <li><span>Stealth (DEX)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Survival (WIS)</span><span class="pval">+4</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Attack</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Shortsword</td><td>+5</td><td>1d6+3 piercing</td><td>Melee; monk weapon</td></tr>
+          <tr><td>Unarmed Strike</td><td>+5</td><td>1d4+3 bludgeoning</td><td>Melee; can use DEX (+3)</td></tr>
+          <tr><td>Dart</td><td>+5</td><td>1d4+3 piercing</td><td>Thrown 20/60 ft</td></tr>
+        </table>
+        <div style="font-size:12px;color:var(--ink-soft);margin-top:5px;"><strong>Bonus action unarmed:</strong> After attacking with a shortsword or unarmed strike, make one unarmed strike for free as a bonus action (no ki needed).</div>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Shortsword</li>
+          <li>10 darts</li>
+          <li>Explorer's pack</li>
+          <li>Monk's robes</li>
+          <li>Small carved jade token (monastery keepsake)</li>
+          <li>10 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Feat: Mobile</h3>
+        <div class="fdesc">Speed +10 ft. When you Dash, difficult terrain doesn't cost extra movement that turn. When you make a melee attack against a creature (hit or miss), it can't make opportunity attacks against you until your next turn.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Ki (3 Points — Recover on Short or Long Rest)</h2>
+    <div class="ki-track"><div class="ki-box">1</div><div class="ki-box">2</div><div class="ki-box">3</div><span style="font-size:12px;color:var(--ink-soft);">Circle when spent; erase on short/long rest.</span></div>
+
+    <div class="feature">
+      <span class="fname">Flurry of Blows</span><span class="fuses">1 Ki</span>
+      <div class="fdesc">After you take the Attack action, you can spend 1 ki point to make two unarmed strikes as a bonus action. Combined with a regular attack: 3 hits in one turn.</div>
+      <div class="tip"><strong>New player tip:</strong> Your primary offensive move. Attack with the shortsword (action), then Flurry of Blows (bonus action) for two more unarmed strikes. That's three attacks, each at +5.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Patient Defense</span><span class="fuses">1 Ki</span>
+      <div class="fdesc">Spend 1 ki to take the Dodge action as a bonus action. Until your next turn, attack rolls against you have disadvantage, and you have advantage on DEX saves. Use this when surrounded and vulnerable.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Step of the Wind</span><span class="fuses">1 Ki</span>
+      <div class="fdesc">Spend 1 ki to take the Dash or Disengage action as a bonus action. Your jump distance also doubles. With Mobile feat, you can move 100 ft in a single turn by dashing.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Open Hand Technique</span><span class="fuses">Way of the Open Hand</span>
+      <div class="fdesc">Whenever you hit a creature with a Flurry of Blows attack, you can impose one of the following effects (no save if you choose the reaction option):
+        <br>• <strong>Prone:</strong> DEX save DC 13 or knocked prone (disadvantage on attacks, melee attacks against it have advantage).
+        <br>• <strong>Pushed:</strong> STR save DC 13 or pushed 15 ft away from you.
+        <br>• <strong>No reactions:</strong> The creature can't take reactions until the end of your next turn (prevents opportunity attacks, counterspells, etc.).
+      </div>
+      <div class="tip"><strong>New player tip:</strong> Use "No reactions" against spellcasters (stops Counterspell) or "Prone" when an ally is standing next to the target (they get advantage on melee attacks against prone creatures).</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Deflect Missiles</span>
+      <div class="fdesc">Reaction: When you are hit by a ranged weapon attack, reduce the damage by 1d10+6. If you reduce the damage to 0, you can spend 1 ki to throw it back (+5 to hit as a ranged attack, range 20/60 ft, dealing the weapon's normal damage + DEX mod).</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Unarmored Defense</span>
+      <div class="fdesc">AC = 10 + DEX mod + WIS mod = 10+3+2 = 15. You cannot wear armour and keep this benefit.</div>
+    </div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">Flying Entrance</div>
+    <div class="quirk-desc">When you move at least 20 ft in a straight line and then land a melee attack on the same turn, the impact carries extra ki momentum: add 1d6 bludgeoning damage to the hit. If the target is Large or smaller, they must succeed on a DC 13 STR save or be pushed 5 ft in the direction of your movement. This works with or without ki points. It also looks extremely cool, which is not a mechanical benefit but is worth noting.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">When I set my mind to something, I follow through no matter what stands in the way.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Discipline. There is deep strength in self-mastery; chaos only leads to ruin.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">I seek to preserve the teachings of the monastery that trained me, even though the monastery itself is gone.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">I have little patience for those who don't apply themselves. Mediocrity offends me on a personal level.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sylvara Thornwood — Level 3 Druid Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li:not(.prof){color:var(--ink-soft);}
+  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .spell-slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+  .sslot{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 10px;text-align:center;}
+  .sslot .sv{font-size:17px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .sslot .sl{font-size:9.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .spell-list{list-style:none;padding:0;margin:0;}
+  .spell-list li{font-size:13px;padding:2.5px 0;border-bottom:1px dotted var(--line);}
+  .spell-list li:last-child{border-bottom:none;}
+  .slvl{display:inline-block;background:var(--chip);border-radius:999px;font-size:10px;padding:1px 6px;color:var(--ink-soft);margin-right:4px;}
+  .statblock{background:var(--panel);border:2px solid var(--accent-soft);border-radius:7px;padding:12px 14px;margin-top:8px;}
+  .statblock .sbname{font-size:15px;font-weight:bold;color:var(--accent);}
+  .statblock .sbsub{font-size:11.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:5px 0;}
+  .chip{background:var(--chip);border:1px solid var(--line);border-radius:4px;padding:3px 7px;font-size:12px;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html">Fighter</a>
+  <a href="monk.html">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html">Bard</a>
+  <a href="cleric.html">Cleric</a>
+  <a href="druid.html" class="active">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/druid.png" class="portrait" alt="Sylvara Thornwood portrait">
+  <h1 class="char-name">Sylvara Thornwood</h1>
+  <div class="char-sub">Wood Elf · Druid 3 · Circle of the Moon · Hermit</div>
+  <div class="char-flavor">"I have lived in the woods long enough to know: everything that grows will eventually change shape."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">16</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">21</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">35 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+3</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">15</div><div class="lbl">Passive Perc.</div></div>
+    <div class="qstat"><div class="val">+5</div><div class="lbl">Spell Attack</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Spell DC</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px;">AC = Hide armour (12+2 DEX) + wooden shield (2). Druids cannot wear metal armour or use metal shields.</div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">13</div><div class="amod">+1</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li><span>Strength</span><span class="pval">+0</span></li>
+          <li><span>Dexterity</span><span class="pval">+3</span></li>
+          <li><span>Constitution</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Intelligence</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Wisdom</span><span class="pval">+5</span></li>
+          <li><span>Charisma</span><span class="pval">−1</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills</h3>
+        <ul class="prof-list">
+          <li><span>Arcana (INT)</span><span class="pval">+1</span></li>
+          <li><span>Athletics (STR)</span><span class="pval">+0</span></li>
+          <li><span>History (INT)</span><span class="pval">+1</span></li>
+          <li><span>Insight (WIS)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Medicine (WIS)</span><span class="pval">+5</span></li>
+          <li class="prof"><span>Nature (INT)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Perception (WIS)</span><span class="pval">+5</span></li>
+          <li class="prof"><span>Religion (INT)</span><span class="pval">+3</span></li>
+          <li><span>Stealth (DEX)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Survival (WIS)</span><span class="pval">+5</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Weapon / Spell</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Shillelagh</td><td>+5</td><td>1d8+3 bludgeoning</td><td>Cantrip (BA to activate); uses WIS</td></tr>
+          <tr><td>Thorn Whip</td><td>+5</td><td>1d6 piercing</td><td>Cantrip; pulls target 10 ft if Large or smaller</td></tr>
+          <tr><td>Bear Claws (Wild)</td><td>+6</td><td>2d6+4 slashing</td><td>Brown Bear Wild Shape (see below)</td></tr>
+        </table>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Quarterstaff (activate Shillelagh cantrip as bonus action)</li>
+          <li>Wooden shield</li>
+          <li>Hide armour</li>
+          <li>Druidic focus (sprig of mistletoe)</li>
+          <li>Herbalism kit</li>
+          <li>Hermit's scroll case with nature notes</li>
+          <li>10 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Racial Traits (Wood Elf)</h3>
+        <div class="fdesc"><strong>Darkvision</strong> 60 ft. <strong>Keen Senses:</strong> Perception proficiency. <strong>Fey Ancestry:</strong> advantage vs charm, can't be magically put to sleep. <strong>Mask of the Wild:</strong> can hide when lightly obscured by natural phenomena. Speed 35 ft.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Class Features</h2>
+
+    <div class="feature">
+      <span class="fname">Wild Shape</span><span class="fuses">2 / Short or Long Rest</span>
+      <div class="fdesc"><strong>Circle of the Moon: use a bonus action</strong> (instead of a full action) to transform. You can transform into any beast of CR 1 or lower that you've seen. You retain your INT, WIS, and CHA. You use the beast's HP — when you drop to 0 HP in beast form, you revert to your normal form with whatever HP you had before transforming. Your equipment falls to the ground or melds into the form (your choice).</div>
+      <div class="tip"><strong>New player tip:</strong> Transform into a Brown Bear at the start of combat. You effectively get 34 extra HP before risking your own. When you revert, you're back to your normal 21 HP minus whatever you had before you transformed.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Combat Wild Shape Healing</span><span class="fuses">Circle of the Moon</span>
+      <div class="fdesc">While in beast form, you can expend a spell slot as a bonus action to regain 1d8 HP per spell level (so a 2nd-level slot = 2d8 HP regained to your beast form).</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Brown Bear — Wild Shape Stat Block</h2>
+    <div class="statblock">
+      <div class="sbname">Brown Bear</div>
+      <div class="sbsub">Large Beast · CR 1 · Wild Shape (uses your bonus action, costs 1 use)</div>
+      <div class="chiprow">
+        <span class="chip"><b>HP</b> 34</span>
+        <span class="chip"><b>AC</b> 11</span>
+        <span class="chip"><b>Speed</b> 40 ft / climb 30 ft</span>
+      </div>
+      <div class="chiprow">
+        <span class="chip"><b>STR</b> 19 (+4)</span>
+        <span class="chip"><b>DEX</b> 10 (+0)</span>
+        <span class="chip"><b>CON</b> 16 (+3)</span>
+      </div>
+      <div class="fdesc" style="margin-top:6px;">
+        <strong>Multiattack.</strong> Two attacks: one Bite and one Claw.<br>
+        <strong>Claw.</strong> +6 to hit, 2d6+4 slashing.<br>
+        <strong>Bite.</strong> +6 to hit, 2d8+4 piercing.<br>
+        <strong>Keen Smell.</strong> Advantage on Perception checks that rely on smell.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Spells</h2>
+    <div class="fdesc" style="margin-bottom:8px;"><strong>Spellcasting:</strong> WIS mod (+3). Spell save DC 13. Spell attack +5. Recover all slots on long rest. Prepare 6 spells each long rest (WIS mod + druid level).</div>
+
+    <div class="spell-slots">
+      <div class="sslot"><div class="sv">4</div><div class="sl">1st level</div></div>
+      <div class="sslot"><div class="sv">2</div><div class="sl">2nd level</div></div>
+    </div>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Cantrips</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">Cantrip</span><strong>Shillelagh</strong> — Bonus action; your quarterstaff attacks use WIS (+5) instead of STR for 1 min. Damage becomes 1d8+3. A martial cantrip.</li>
+      <li><span class="slvl">Cantrip</span><strong>Thorn Whip</strong> — +5 ranged; 1d6 piercing; if Large or smaller, you pull the target 10 ft toward you. Range 30 ft.</li>
+    </ul>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Prepared Spells (choose 6)</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">1st</span><strong>Healing Word</strong> — Bonus action; 1d4+3 HP healed, range 60 ft. Best healer action-economy in the game.</li>
+      <li><span class="slvl">1st</span><strong>Cure Wounds</strong> — Touch; 1d8+3 HP. For bigger heals when action economy isn't a concern.</li>
+      <li><span class="slvl">1st</span><strong>Entangle</strong> — STR save DC 13; 20 ft square of difficult terrain, creatures restrained if they fail (concentration, 1 min).</li>
+      <li><span class="slvl">1st</span><strong>Thunderwave</strong> — CON save DC 13; 2d8 thunder in 15 ft cube; pushed 10 ft on fail. Good escape tool.</li>
+      <li><span class="slvl">2nd</span><strong>Moonbeam</strong> — 5 ft cylinder, 40 ft tall; CON save DC 13, 2d10 radiant each turn; shapechangers have disadvantage (concentration, 1 min). Move it 60 ft as bonus action each turn.</li>
+      <li><span class="slvl">2nd</span><strong>Pass Without Trace</strong> — Concentration, 1 hr; +10 to Stealth checks and you can't be tracked by nonmagical means for everyone in 30 ft.</li>
+    </ul>
+    <div class="tip" style="margin-top:8px;"><strong>Tip:</strong> Open combat in Brown Bear form to absorb damage. When the beast form drops, cast Moonbeam or Entangle with your remaining actions to control the battlefield.</div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">Local Gossip</div>
+    <div class="quirk-desc">You spend one minute conversing with whatever small animals or insects are nearby — birds, squirrels, beetles, a suspiciously attentive crow. They always have opinions. You learn one piece of local information that a small creature would plausibly know: recent foot traffic, an unusual smell, a good hiding spot, a sound in the night, or a dangerous area nearby. The quality of the tip varies with the quality of the animal. The crow is usually the most useful. The crow knows it.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">I am blunt. I say exactly what I mean, even when it isn't what others want to hear.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Balance. Nature thrives when predator and prey keep each other in check — so do people.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">A grove I tended was destroyed by loggers while I was away. I will not let that happen to another sacred place.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">I have little patience for the pace of civilised life. I assume most problems can be solved by someone charging in bear form.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>

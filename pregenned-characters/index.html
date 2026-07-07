@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 3 Pregens — One-Shot Characters</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf6ee; --panel: #ffffff; --ink: #2b2520; --ink-soft: #55483d;
+    --accent: #8a3b2b; --accent-soft: #c97b5f; --line: #e2d6c3;
+    --tell: #eef4ea; --tell-line: #9db98a; --read: #f4ece0; --read-line: #c9a86a;
+    --table-head: #f1e4cf; --chip: #f1e4cf;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, 'Palatino Linotype', serif; line-height: 1.55; }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 44px 80px; }
+  .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-soft); font-weight: bold; margin-bottom: 6px; }
+  h1 { font-size: 36px; margin: 0 0 6px; color: var(--accent); }
+  .subtitle { color: var(--ink-soft); margin: 0 0 24px; font-size: 16px; font-style: italic; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-soft); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin: 28px 0 14px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  a.card {
+    display: block; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 16px 18px; text-decoration: none; color: var(--ink);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  a.card:hover { border-color: var(--accent-soft); box-shadow: 0 2px 8px rgba(138,59,43,0.12); }
+  .card-class { font-size: 17px; font-weight: bold; color: var(--accent); margin-bottom: 3px; }
+  .card-name { font-size: 13.5px; color: var(--ink); }
+  .card-sub { font-size: 12px; color: var(--ink-soft); font-style: italic; }
+  .card-stats { margin-top: 8px; display: flex; gap: 8px; }
+  .cstat { background: var(--chip); border-radius: 4px; padding: 3px 7px; font-size: 11.5px; color: var(--ink-soft); }
+  .notes { background: var(--read); border-left: 4px solid var(--read-line); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 14px; color: var(--ink-soft); margin-bottom: 28px; }
+  @media print { .card-grid { grid-template-columns: repeat(3,1fr); } }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">D&amp;D 5e · One-Shot Toolkit</div>
+  <h1>Level 3 Pregenerated Characters</h1>
+  <p class="subtitle">One character per class — ready to hand to a player at the table.</p>
+
+  <div class="notes">
+    All 12 core classes, built at level 3 using the standard array (15/14/13/12/10/8).
+    Proficiency bonus is <strong>+2</strong>. Each sheet includes a new-player tip for every
+    major feature. Print individual sheets from the browser (Ctrl+P / ⌘+P) — the nav
+    collapses automatically.
+  </div>
+
+  <h2>Martial Characters</h2>
+  <div class="card-grid">
+    <a href="barbarian.html" class="card">
+      <div class="card-class">Barbarian</div>
+      <div class="card-name">Grimtusk Ironskin</div>
+      <div class="card-sub">Half-Orc · Path of the Berserker · Outlander</div>
+      <div class="card-stats"><span class="cstat">AC 15</span><span class="cstat">HP 32</span><span class="cstat">STR</span></div>
+    </a>
+    <a href="fighter.html" class="card">
+      <div class="card-class">Fighter</div>
+      <div class="card-name">Cade Stormwall</div>
+      <div class="card-sub">Human (V) · Champion · Soldier</div>
+      <div class="card-stats"><span class="cstat">AC 19</span><span class="cstat">HP 34</span><span class="cstat">STR</span></div>
+    </a>
+    <a href="monk.html" class="card">
+      <div class="card-class">Monk</div>
+      <div class="card-name">Wei Sunstep</div>
+      <div class="card-sub">Human (V) · Open Hand · Outlander</div>
+      <div class="card-stats"><span class="cstat">AC 15</span><span class="cstat">HP 21</span><span class="cstat">DEX/WIS</span></div>
+    </a>
+    <a href="paladin.html" class="card">
+      <div class="card-class">Paladin</div>
+      <div class="card-name">Ser Iona Brightshield</div>
+      <div class="card-sub">Human (V) · Oath of Devotion · Noble</div>
+      <div class="card-stats"><span class="cstat">AC 18</span><span class="cstat">HP 28</span><span class="cstat">STR/CHA</span></div>
+    </a>
+    <a href="ranger.html" class="card">
+      <div class="card-class">Ranger</div>
+      <div class="card-name">Ash Coldwind</div>
+      <div class="card-sub">Wood Elf · Hunter · Outlander</div>
+      <div class="card-stats"><span class="cstat">AC 15</span><span class="cstat">HP 28</span><span class="cstat">DEX</span></div>
+    </a>
+    <a href="rogue.html" class="card">
+      <div class="card-class">Rogue</div>
+      <div class="card-name">Pip Tumblewhistle</div>
+      <div class="card-sub">Lightfoot Halfling · Thief · Criminal</div>
+      <div class="card-stats"><span class="cstat">AC 15</span><span class="cstat">HP 24</span><span class="cstat">DEX</span></div>
+    </a>
+  </div>
+
+  <h2>Spellcasting Characters</h2>
+  <div class="card-grid">
+    <a href="bard.html" class="card">
+      <div class="card-class">Bard</div>
+      <div class="card-name">Lyria Ashveil</div>
+      <div class="card-sub">Half-Elf · College of Lore · Entertainer</div>
+      <div class="card-stats"><span class="cstat">AC 14</span><span class="cstat">HP 24</span><span class="cstat">CHA</span></div>
+    </a>
+    <a href="cleric.html" class="card">
+      <div class="card-class">Cleric</div>
+      <div class="card-name">Brother Aldric</div>
+      <div class="card-sub">Human (V) · Life Domain · Acolyte</div>
+      <div class="card-stats"><span class="cstat">AC 18</span><span class="cstat">HP 24</span><span class="cstat">WIS</span></div>
+    </a>
+    <a href="druid.html" class="card">
+      <div class="card-class">Druid</div>
+      <div class="card-name">Sylvara Thornwood</div>
+      <div class="card-sub">Wood Elf · Circle of the Moon · Hermit</div>
+      <div class="card-stats"><span class="cstat">AC 16</span><span class="cstat">HP 21</span><span class="cstat">WIS</span></div>
+    </a>
+    <a href="sorcerer.html" class="card">
+      <div class="card-class">Sorcerer</div>
+      <div class="card-name">Zara Emberveil</div>
+      <div class="card-sub">Tiefling · Wild Magic · Sage</div>
+      <div class="card-stats"><span class="cstat">AC 14</span><span class="cstat">HP 20</span><span class="cstat">CHA</span></div>
+    </a>
+    <a href="warlock.html" class="card">
+      <div class="card-class">Warlock</div>
+      <div class="card-name">Dorian Ashcroft</div>
+      <div class="card-sub">Human (V) · The Fiend · Sailor</div>
+      <div class="card-stats"><span class="cstat">AC 13</span><span class="cstat">HP 24</span><span class="cstat">CHA</span></div>
+    </a>
+    <a href="wizard.html" class="card">
+      <div class="card-class">Wizard</div>
+      <div class="card-name">Mira Starcroft</div>
+      <div class="card-sub">High Elf · Evocation · Sage</div>
+      <div class="card-stats"><span class="cstat">AC 15</span><span class="cstat">HP 17</span><span class="cstat">INT</span></div>
+    </a>
+  </div>
+</main>
+</body>
+</html>

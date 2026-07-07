@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brother Aldric — Level 3 Cleric Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li:not(.prof){color:var(--ink-soft);}
+  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .spell-slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+  .sslot{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 10px;text-align:center;}
+  .sslot .sv{font-size:17px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .sslot .sl{font-size:9.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .spell-list{list-style:none;padding:0;margin:0;}
+  .spell-list li{font-size:13px;padding:2.5px 0;border-bottom:1px dotted var(--line);}
+  .spell-list li:last-child{border-bottom:none;}
+  .slvl{display:inline-block;background:var(--chip);border-radius:999px;font-size:10px;padding:1px 6px;color:var(--ink-soft);margin-right:4px;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html">Fighter</a>
+  <a href="monk.html">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html">Bard</a>
+  <a href="cleric.html" class="active">Cleric</a>
+  <a href="druid.html">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/cleric.png" class="portrait" alt="Brother Aldric portrait">
+  <h1 class="char-name">Brother Aldric</h1>
+  <div class="char-sub">Human (Variant) · Cleric 3 · Life Domain · Acolyte · Feat: War Caster</div>
+  <div class="char-flavor">"I don't pray for miracles. I pray for the courage to be the miracle someone needs."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">18</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">24</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">30 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+0</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Passive Perc.</div></div>
+    <div class="qstat"><div class="val">+5</div><div class="lbl">Spell Attack</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Spell DC</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px;">AC = Chain mail (16) + Shield (2). Life Domain grants heavy armour proficiency.</div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">13</div><div class="amod">+1</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">15</div><div class="amod">+2</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li><span>Strength</span><span class="pval">+1</span></li>
+          <li><span>Dexterity</span><span class="pval">+0</span></li>
+          <li><span>Constitution</span><span class="pval">+2</span></li>
+          <li><span>Intelligence</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Wisdom</span><span class="pval">+5</span></li>
+          <li class="prof"><span>Charisma</span><span class="pval">+1</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills</h3>
+        <ul class="prof-list">
+          <li><span>Arcana (INT)</span><span class="pval">+1</span></li>
+          <li><span>Athletics (STR)</span><span class="pval">+1</span></li>
+          <li><span>Deception (CHA)</span><span class="pval">−1</span></li>
+          <li><span>History (INT)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Insight (WIS)</span><span class="pval">+5</span></li>
+          <li><span>Intimidation (CHA)</span><span class="pval">−1</span></li>
+          <li class="prof"><span>Medicine (WIS)</span><span class="pval">+5</span></li>
+          <li><span>Nature (INT)</span><span class="pval">+1</span></li>
+          <li><span>Perception (WIS)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Persuasion (CHA)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Religion (INT)</span><span class="pval">+3</span></li>
+          <li><span>Survival (WIS)</span><span class="pval">+3</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Weapon / Spell</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Mace</td><td>+3</td><td>1d6+1 bludgeoning</td><td>Melee, one-handed</td></tr>
+          <tr><td>Sacred Flame</td><td>DEX save 13</td><td>1d8 radiant</td><td>Cantrip; no cover benefit</td></tr>
+          <tr><td>Guiding Bolt</td><td>+5</td><td>4d6 radiant</td><td>Next attack vs target has advantage</td></tr>
+        </table>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Mace</li>
+          <li>Chain mail</li>
+          <li>Shield (holy symbol engraved)</li>
+          <li>Holy symbol (amulet)</li>
+          <li>Acolyte's pack (prayer book, incense, vestments, etc.)</li>
+          <li>15 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Feat: War Caster</h3>
+        <div class="fdesc">Advantage on CON saving throws to maintain concentration on spells. Can perform somatic components even with hands full. Can cast spells as opportunity attacks.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Class Features</h2>
+
+    <div class="feature">
+      <span class="fname">Disciple of Life</span><span class="fuses">Life Domain</span>
+      <div class="fdesc">Whenever you use a spell of 1st level or higher to restore hit points, the creature regains additional HP equal to 2 + the spell's level. So Healing Word (1st level) heals 1d4+3+3 = 1d4+6. Spiritual Weapon (2nd) adds +4 if it heals, but it doesn't — only healing spells apply.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Channel Divinity</span><span class="fuses">1 / Short or Long Rest</span>
+      <div class="fdesc">Two options:
+        <br><strong>Turn Undead:</strong> Each undead that can see or hear you within 30 ft must make a WIS save (DC 13) or be forced to flee for 1 minute.
+        <br><strong>Preserve Life:</strong> As an action, restore HP equal to five times your cleric level (15 HP) divided among any creatures within 30 ft that you can see. Each creature can be restored to at most half its HP maximum.
+      </div>
+      <div class="tip"><strong>New player tip:</strong> Preserve Life is a free burst heal that doesn't use a spell slot — use it when two or three allies are hurt rather than burning a slot on one person.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Divine Strike</span>
+      <div class="fdesc">Not yet — this feature arrives at level 8. For now, you're a healer and blaster, not a melee damage dealer.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Spells</h2>
+    <div class="fdesc" style="margin-bottom:8px;"><strong>Spellcasting:</strong> WIS mod (+3). Spell save DC 13. Spell attack +5. Recover all slots on long rest. You prepare spells each long rest (WIS mod + cleric level = 6 prepared).</div>
+
+    <div class="spell-slots">
+      <div class="sslot"><div class="sv">4</div><div class="sl">1st level</div></div>
+      <div class="sslot"><div class="sv">2</div><div class="sl">2nd level</div></div>
+    </div>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Cantrips (always available, no slot needed)</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">Cantrip</span><strong>Sacred Flame</strong> — DEX save DC 13; 1d8 radiant; target gains no benefit from cover. Use on distant enemies or through walls.</li>
+      <li><span class="slvl">Cantrip</span><strong>Guidance</strong> — Touch a willing creature; they add 1d4 to one ability check in the next minute. Excellent out of combat.</li>
+      <li><span class="slvl">Cantrip</span><strong>Toll the Dead</strong> — WIS save DC 13; 1d8 necrotic (1d12 if target is missing any HP). Better damage than Sacred Flame vs wounded targets.</li>
+    </ul>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Domain Spells (always prepared — never count against limit)</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">1st</span><strong>Bless</strong> — Concentration; up to 3 creatures add 1d4 to all attack rolls and saving throws for 1 min. The best buff in the game.</li>
+      <li><span class="slvl">1st</span><strong>Cure Wounds</strong> — Touch; 1d8+3 HP healed. (Prefer Healing Word for the action economy.)</li>
+      <li><span class="slvl">2nd</span><strong>Lesser Restoration</strong> — Touch; remove one disease, blindness, deafness, paralysis, or poison condition.</li>
+      <li><span class="slvl">2nd</span><strong>Spiritual Weapon</strong> — Bonus action; create a floating weapon (2d8+3 force) that attacks as your bonus action each turn. No concentration!</li>
+    </ul>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Prepared Spells (choose 6; rotate before each long rest)</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">1st</span><strong>Healing Word</strong> — Bonus action; 1d4+6 healed (Disciple of Life). Best healing action-to-value ratio.</li>
+      <li><span class="slvl">1st</span><strong>Guiding Bolt</strong> — Ranged +5; 4d6 radiant; next attack vs target has advantage. Excellent for helping a striker land their hit.</li>
+      <li><span class="slvl">1st</span><strong>Shield of Faith</strong> — Concentration; +2 AC to one creature for 10 min. Stack on your tankiest frontliner.</li>
+      <li><span class="slvl">1st</span><strong>Inflict Wounds</strong> — Melee +5; 3d10 necrotic. High damage if you're willing to get in range.</li>
+      <li><span class="slvl">2nd</span><strong>Aid</strong> — Boost max HP and current HP of up to 3 creatures by 5 each (8 hrs, no concentration).</li>
+      <li><span class="slvl">2nd</span><strong>Prayer of Healing</strong> — 10-minute ritual; up to 6 creatures regain 2d8+3 HP. Perfect post-combat patch-up (can't be used mid-fight).</li>
+    </ul>
+    <div class="tip" style="margin-top:8px;"><strong>Tip:</strong> Round 1: cast Bless (concentration) on yourself + two allies. Round 2+: Spiritual Weapon (bonus action) + Sacred Flame (action). You're buffing and attacking simultaneously without dropping Bless.</div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">Mild Prophecy</div>
+    <div class="quirk-desc">You pause, bow your head, and sincerely pray for guidance. Ask the DM one yes-or-no question about the current situation. The DM answers honestly, though the answer may be brief and may not specify which deity delivered it. This is not Commune — it's more like a gut feeling your god has occasionally confirmed to be accurate. It's also free. Aldric has come to rely on it more than he'd admit to anyone with theological training.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">I see omens in every event and listen for the gods in the silence between words.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Faith. My deity's will is not always clear, but following it is always right.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">A relic was stolen from my temple. Until I recover it, I carry that failure with me.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">I judge others harshly and myself even more severely. Perfection is the only acceptable standard.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>

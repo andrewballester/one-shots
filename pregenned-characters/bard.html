@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyria Ashveil — Level 3 Bard Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li.exp::before{content:"◆";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li.exp{font-weight:bold;color:var(--ink);}
+  .prof-list li:not(.prof):not(.exp){color:var(--ink-soft);}
+  .prof-list li:not(.prof):not(.exp)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .spell-slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+  .sslot{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 10px;text-align:center;}
+  .sslot .sv{font-size:17px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .sslot .sl{font-size:9.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .spell-list{list-style:none;padding:0;margin:0;}
+  .spell-list li{font-size:13px;padding:2.5px 0;border-bottom:1px dotted var(--line);}
+  .spell-list li:last-child{border-bottom:none;}
+  .slvl{display:inline-block;background:var(--chip);border-radius:999px;font-size:10px;padding:1px 6px;color:var(--ink-soft);margin-right:4px;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html">Fighter</a>
+  <a href="monk.html">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html" class="active">Bard</a>
+  <a href="cleric.html">Cleric</a>
+  <a href="druid.html">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/bard.png" class="portrait" alt="Lyria Ashveil portrait">
+  <h1 class="char-name">Lyria Ashveil</h1>
+  <div class="char-sub">Half-Elf · Bard 3 · College of Lore · Entertainer</div>
+  <div class="char-flavor">"The trick to a good story is deciding which parts are true while you're telling it."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">14</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">24</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">30 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">12</div><div class="lbl">Passive Perc.</div></div>
+    <div class="qstat"><div class="val">+5</div><div class="lbl">Spell Attack</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Spell DC</div></div>
+  </div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">15</div><div class="amod">+2</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">14</div><div class="amod">+2</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">17</div><div class="amod">+3</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li><span>Strength</span><span class="pval">−1</span></li>
+          <li class="prof"><span>Dexterity</span><span class="pval">+4</span></li>
+          <li><span>Constitution</span><span class="pval">+2</span></li>
+          <li><span>Intelligence</span><span class="pval">+1</span></li>
+          <li><span>Wisdom</span><span class="pval">+0</span></li>
+          <li class="prof"><span>Charisma</span><span class="pval">+5</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills <small style="font-size:10px;font-weight:normal;color:var(--ink-soft)">(◆ = Expertise)</small></h3>
+        <ul class="prof-list">
+          <li class="prof"><span>Acrobatics (DEX)</span><span class="pval">+4</span></li>
+          <li><span>Animal Handling (WIS)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Arcana (INT)</span><span class="pval">+3</span></li>
+          <li><span>Athletics (STR)</span><span class="pval">+0</span></li>
+          <li class="prof"><span>Deception (CHA)</span><span class="pval">+5</span></li>
+          <li class="prof"><span>History (INT)</span><span class="pval">+3</span></li>
+          <li class="prof"><span>Insight (WIS)</span><span class="pval">+2</span></li>
+          <li><span>Intimidation (CHA)</span><span class="pval">+4</span></li>
+          <li><span>Medicine (WIS)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Perception (WIS)</span><span class="pval">+2</span></li>
+          <li class="exp"><span>Performance (CHA)</span><span class="pval">+7</span></li>
+          <li class="exp"><span>Persuasion (CHA)</span><span class="pval">+7</span></li>
+          <li><span>Sleight of Hand (DEX)</span><span class="pval">+3</span></li>
+          <li><span>Stealth (DEX)</span><span class="pval">+3</span></li>
+        </ul>
+        <div style="font-size:11.5px;color:var(--ink-soft);margin-top:5px;font-style:italic;">Jack of All Trades: +1 to all unlisted non-proficient skills.</div>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Weapon</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Rapier</td><td>+4</td><td>1d8+2 piercing</td><td>Finesse, melee</td></tr>
+          <tr><td>Hand crossbow</td><td>+4</td><td>1d6+2 piercing</td><td>Range 30/120</td></tr>
+          <tr><td>Vicious Mockery</td><td>WIS save 13</td><td>1d4 psychic</td><td>+ disadvantage on next attack (cantrip)</td></tr>
+        </table>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Rapier</li>
+          <li>Hand crossbow &amp; 20 bolts</li>
+          <li>Studded leather armour</li>
+          <li>Lute</li>
+          <li>Entertainer's pack (costume, candles, rations, etc.)</li>
+          <li>3 daggers</li>
+          <li>40 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Racial Traits (Half-Elf)</h3>
+        <div class="fdesc"><strong>Darkvision</strong> 60 ft. <strong>Fey Ancestry:</strong> advantage on saves vs charm, can't be put to sleep by magic.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Class Features</h2>
+
+    <div class="feature">
+      <span class="fname">Bardic Inspiration</span><span class="fuses">3 / Long Rest (CHA mod)</span>
+      <div class="fdesc">Bonus action: choose one creature other than yourself within 60 ft that can hear you. They gain one Bardic Inspiration die (d6). Once in the next 10 minutes, they can roll the die and add the number to one ability check, attack roll, or saving throw. Only one die per creature at a time.</div>
+      <div class="tip"><strong>New player tip:</strong> Hand these out before big rolls — a +d6 on a saving throw vs the boss's big spell can be life-saving. Give them to melee fighters (who attack often) early in a fight.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Jack of All Trades</span>
+      <div class="fdesc">You add half your proficiency bonus (+1) to any ability check that doesn't already use your proficiency bonus. This makes you passably good at almost everything.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Song of Rest</span>
+      <div class="fdesc">If you or any friendly creatures that can hear your performance spend Hit Dice to regain HP at the end of a short rest, each of those creatures regains an extra 1d6 HP.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Expertise</span>
+      <div class="fdesc">Double proficiency bonus on Persuasion (+7) and Performance (+7). These are your signature skills — lean on them in social situations.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Cutting Words</span><span class="fuses">College of Lore</span>
+      <div class="fdesc">When a creature you can see within 60 ft makes an attack roll, ability check, or damage roll, you can use your reaction to expend one Bardic Inspiration die and subtract the result from that roll. You must decide before the DM reveals the outcome.</div>
+      <div class="tip"><strong>New player tip:</strong> Use this reactively on enemy attacks when an ally is barely hanging on. Roll the die, then subtract from the enemy's roll — it can turn a hit into a miss.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Spells</h2>
+    <div class="fdesc" style="margin-bottom:8px;"><strong>Spellcasting:</strong> CHA mod (+3). Spell save DC 13. Spell attack +5. Recover all slots on long rest.</div>
+
+    <div class="spell-slots">
+      <div class="sslot"><div class="sv">4</div><div class="sl">1st level</div></div>
+      <div class="sslot"><div class="sv">2</div><div class="sl">2nd level</div></div>
+    </div>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Cantrips</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">Cantrip</span><strong>Vicious Mockery</strong> — WIS save DC 13; 1d4 psychic + target has disadvantage on its next attack roll (range 60 ft)</li>
+      <li><span class="slvl">Cantrip</span><strong>Minor Illusion</strong> — Create a sound or image within 30 ft (1 min); Investigation DC 13 to see through it</li>
+    </ul>
+
+    <div style="margin-top:10px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-soft);">Spells Known (6)</strong></div>
+    <ul class="spell-list" style="margin-top:5px;">
+      <li><span class="slvl">1st</span><strong>Healing Word</strong> — Bonus action; 1d4+3 HP healed, range 60 ft. Use this over Cure Wounds — same healing, doesn't cost your action.</li>
+      <li><span class="slvl">1st</span><strong>Thunderwave</strong> — CON save DC 13; 2d8 thunder &amp; pushed 10 ft; 15 ft cube from you.</li>
+      <li><span class="slvl">1st</span><strong>Dissonant Whispers</strong> — WIS save DC 13; 3d6 psychic, target must use reaction to flee (trigger AoOs from allies).</li>
+      <li><span class="slvl">2nd</span><strong>Hold Person</strong> — WIS save DC 13; target paralyzed (concentration, 1 min). Attacks against it auto-crit within 5 ft!</li>
+      <li><span class="slvl">2nd</span><strong>Shatter</strong> — CON save DC 13; 3d8 thunder in 10 ft sphere; disadvantage for constructs; destroys non-magic objects.</li>
+      <li><span class="slvl">2nd</span><strong>Faerie Fire</strong> — DEX save DC 13; glowing creatures can't be invisible, attacks against them have advantage (concentration, 1 min).</li>
+    </ul>
+    <div class="tip" style="margin-top:8px;"><strong>Tip:</strong> Faerie Fire + Fighter with Action Surge = devastating. Hold Person + any melee ally within 5 ft = guaranteed crits.</div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">Earworm</div>
+    <div class="quirk-desc">As a bonus action, hum four bars of an aggressively catchy tune at one creature within 60 ft that can hear you. That creature must succeed on a DC 13 WIS save or spend its next bonus action involuntarily humming or whistling the melody instead of anything else. They know exactly what you did and they cannot stop.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">I love a good story, whether true or embellished.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Creativity. The world needs new perspectives, not more repetitions of the old.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">I want to be famous, whatever it takes — and I want the story of how I got there to be worth telling.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">I can't help but embellish my own role in every story I tell.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>

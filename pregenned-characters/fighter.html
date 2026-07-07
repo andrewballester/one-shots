@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cade Stormwall — Level 3 Fighter Pregen</title>
+<style>
+  :root { color-scheme:light; --bg:#faf6ee; --panel:#ffffff; --ink:#2b2520; --ink-soft:#55483d; --accent:#8a3b2b; --accent-soft:#c97b5f; --line:#e2d6c3; --tell:#eef4ea; --tell-line:#9db98a; --read:#f4ece0; --read-line:#c9a86a; --table-head:#f1e4cf; --chip:#f1e4cf; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Palatino Linotype',serif;line-height:1.55;}
+  .layout{display:flex;min-height:100vh;}
+  nav.toc{width:200px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;}
+  nav.toc .brand{font-size:13px;font-weight:bold;color:var(--accent);margin-bottom:2px;}
+  nav.toc .brand-sub{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;}
+  nav.toc h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent-soft);margin:12px 0 4px 3px;border-top:1px solid var(--line);padding-top:9px;}
+  nav.toc h2:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  nav.toc a{display:block;padding:4px 8px;border-radius:4px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;margin-bottom:1px;}
+  nav.toc a:hover{background:var(--tell);color:var(--ink);}
+  nav.toc a.active{background:var(--read);color:var(--accent);font-weight:bold;}
+  main{flex:1;padding:30px 40px 70px;max-width:840px;}
+  .char-name{font-size:32px;font-weight:bold;color:var(--accent);line-height:1.1;margin:0;}
+  .char-sub{font-style:italic;color:var(--ink-soft);font-size:14.5px;margin:3px 0 8px;}
+  .char-flavor{font-style:italic;color:var(--ink-soft);font-size:13.5px;border-left:4px solid var(--read-line);padding:7px 12px;background:var(--read);border-radius:0 5px 5px 0;margin-bottom:18px;}
+  .quickstats{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0;}
+  .qstat{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 11px;text-align:center;min-width:65px;}
+  .qstat .val{font-size:20px;font-weight:bold;color:var(--accent);line-height:1.1;}
+  .qstat .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .ability-row{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0;}
+  .ability-box{background:var(--panel);border:2px solid var(--line);border-radius:7px;padding:9px 5px;text-align:center;}
+  .ability-box .ascore{font-size:22px;font-weight:bold;color:var(--ink);line-height:1;}
+  .ability-box .amod{font-size:14px;color:var(--accent);font-weight:bold;}
+  .ability-box .aname{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-top:2px;}
+  .sheet-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;}
+  @media(max-width:680px){.sheet-grid{grid-template-columns:1fr;}}
+  .sheet-col h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 7px;}
+  .prof-list{list-style:none;padding:0;margin:0;font-size:13px;}
+  .prof-list li{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .prof-list li:last-child{border-bottom:none;}
+  .prof-list li.prof{font-weight:bold;color:var(--ink);}
+  .prof-list li.prof::before{content:"●";color:var(--accent);margin-right:5px;font-size:9px;}
+  .prof-list li:not(.prof){color:var(--ink-soft);}
+  .prof-list li:not(.prof)::before{content:"○";color:var(--line);margin-right:5px;font-size:9px;}
+  .pval{font-weight:bold;min-width:24px;text-align:right;}
+  table.atk{border-collapse:collapse;width:100%;font-size:12.5px;}
+  table.atk th,table.atk td{border:1px solid var(--line);padding:5px 7px;text-align:left;}
+  table.atk th{background:var(--table-head);font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-soft);border-bottom:1px solid var(--line);padding-bottom:3px;margin:0 0 10px;}
+  .feature{margin-bottom:12px;}
+  .fname{font-weight:bold;font-size:14px;}
+  .fuses{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-size:10.5px;padding:1px 7px;color:var(--ink-soft);margin-left:5px;}
+  .fdesc{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .tip{background:var(--tell);border-left:3px solid var(--tell-line);padding:6px 10px;border-radius:0 4px 4px 0;font-size:12.5px;color:#3a5c2a;margin-top:5px;}
+  .equip-list{list-style:none;padding:0;margin:0;}
+  .equip-list li{font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line);}
+  .equip-list li:last-child{border-bottom:none;}
+  .personality{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ptrait{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:9px 11px;}
+  .plbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-soft);margin-bottom:3px;}
+  .ptxt{font-size:13px;font-style:italic;color:var(--ink-soft);}
+  .quirk{background:#f2edf8;border:2px dashed #9b7ab8;border-radius:8px;padding:12px 16px;margin-top:20px;}
+  .quirk-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#7b5099;font-weight:bold;margin-bottom:2px;}
+  .quirk-name{font-size:16px;font-weight:bold;color:#4a2d6e;}
+  .quirk-desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .portrait{float:right;width:155px;border:3px solid var(--line);border-radius:4px;margin:0 0 14px 20px;box-shadow:2px 4px 10px rgba(0,0,0,.2);}
+  @media print{nav.toc{display:none;}.layout{display:block;}main{padding:16px;max-width:100%;}.portrait{width:110px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">Level 3 Pregens</div>
+  <div class="brand-sub">One-shot characters · 5e</div>
+  <h2>Martial</h2>
+  <a href="barbarian.html">Barbarian</a>
+  <a href="fighter.html" class="active">Fighter</a>
+  <a href="monk.html">Monk</a>
+  <a href="paladin.html">Paladin</a>
+  <a href="ranger.html">Ranger</a>
+  <a href="rogue.html">Rogue</a>
+  <h2>Casting</h2>
+  <a href="bard.html">Bard</a>
+  <a href="cleric.html">Cleric</a>
+  <a href="druid.html">Druid</a>
+  <a href="sorcerer.html">Sorcerer</a>
+  <a href="warlock.html">Warlock</a>
+  <a href="wizard.html">Wizard</a>
+  <h2>Hub</h2>
+  <a href="index.html">All Characters</a>
+</nav>
+<main>
+  <img src="portraits/fighter.png" class="portrait" alt="Cade Stormwall portrait">
+  <h1 class="char-name">Cade Stormwall</h1>
+  <div class="char-sub">Human (Variant) · Fighter 3 · Champion · Soldier · Feat: Tough</div>
+  <div class="char-flavor">"I've been hit harder. I've been outnumbered worse. The job still gets done."</div>
+
+  <div class="quickstats">
+    <div class="qstat"><div class="val">19</div><div class="lbl">AC</div></div>
+    <div class="qstat"><div class="val">34</div><div class="lbl">HP</div></div>
+    <div class="qstat"><div class="val">30 ft</div><div class="lbl">Speed</div></div>
+    <div class="qstat"><div class="val">+1</div><div class="lbl">Initiative</div></div>
+    <div class="qstat"><div class="val">+2</div><div class="lbl">Prof. Bonus</div></div>
+    <div class="qstat"><div class="val">13</div><div class="lbl">Passive Perc.</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px;">AC = Chain mail (16) + Shield (2) + Defense fighting style (+1). Highest AC at this tier.</div>
+
+  <div class="ability-row">
+    <div class="ability-box"><div class="ascore">16</div><div class="amod">+3</div><div class="aname">STR</div></div>
+    <div class="ability-box"><div class="ascore">13</div><div class="amod">+1</div><div class="aname">DEX</div></div>
+    <div class="ability-box"><div class="ascore">15</div><div class="amod">+2</div><div class="aname">CON</div></div>
+    <div class="ability-box"><div class="ascore">10</div><div class="amod">+0</div><div class="aname">INT</div></div>
+    <div class="ability-box"><div class="ascore">12</div><div class="amod">+1</div><div class="aname">WIS</div></div>
+    <div class="ability-box"><div class="ascore">8</div><div class="amod">−1</div><div class="aname">CHA</div></div>
+  </div>
+
+  <div class="sheet-grid">
+    <div>
+      <div class="sheet-col">
+        <h3>Saving Throws</h3>
+        <ul class="prof-list">
+          <li class="prof"><span>Strength</span><span class="pval">+5</span></li>
+          <li><span>Dexterity</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Constitution</span><span class="pval">+4</span></li>
+          <li><span>Intelligence</span><span class="pval">+0</span></li>
+          <li><span>Wisdom</span><span class="pval">+1</span></li>
+          <li><span>Charisma</span><span class="pval">−1</span></li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Skills</h3>
+        <ul class="prof-list">
+          <li><span>Acrobatics (DEX)</span><span class="pval">+1</span></li>
+          <li><span>Animal Handling (WIS)</span><span class="pval">+1</span></li>
+          <li><span>Arcana (INT)</span><span class="pval">+0</span></li>
+          <li class="prof"><span>Athletics (STR)</span><span class="pval">+5</span></li>
+          <li><span>Deception (CHA)</span><span class="pval">−1</span></li>
+          <li class="prof"><span>History (INT)</span><span class="pval">+2</span></li>
+          <li><span>Insight (WIS)</span><span class="pval">+1</span></li>
+          <li class="prof"><span>Intimidation (CHA)</span><span class="pval">+1</span></li>
+          <li><span>Investigation (INT)</span><span class="pval">+0</span></li>
+          <li><span>Medicine (WIS)</span><span class="pval">+1</span></li>
+          <li><span>Nature (INT)</span><span class="pval">+0</span></li>
+          <li class="prof"><span>Perception (WIS)</span><span class="pval">+3</span></li>
+          <li><span>Stealth (DEX)</span><span class="pval">+1</span></li>
+          <li><span>Survival (WIS)</span><span class="pval">+1</span></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="sheet-col">
+        <h3>Attacks</h3>
+        <table class="atk">
+          <tr><th>Weapon</th><th>To Hit</th><th>Damage</th><th>Notes</th></tr>
+          <tr><td>Longsword</td><td>+5</td><td>1d8+3 slashing</td><td>Melee; or 1d10+3 two-handed</td></tr>
+          <tr><td>Handaxe</td><td>+5</td><td>1d6+3 slashing</td><td>Melee or thrown 20/60</td></tr>
+          <tr><td>Javelin</td><td>+5</td><td>1d6+3 piercing</td><td>Melee or thrown 30/120</td></tr>
+        </table>
+        <div style="font-size:12px;color:var(--ink-soft);margin-top:5px;"><strong>Critical hits</strong> on a roll of 19 or 20 (Champion: Improved Critical). Critical = double all damage dice.</div>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Equipment</h3>
+        <ul class="equip-list">
+          <li>Longsword</li>
+          <li>Shield</li>
+          <li>2 handaxes</li>
+          <li>3 javelins</li>
+          <li>Chain mail</li>
+          <li>Explorer's pack</li>
+          <li>Soldier insignia (keepsake)</li>
+          <li>50 gp</li>
+        </ul>
+      </div>
+      <div class="sheet-col" style="margin-top:14px;">
+        <h3>Feat: Tough</h3>
+        <div class="fdesc">+2 HP per level = +6 HP at level 3. This pushes total HP to 34, making Cade significantly harder to drop than other frontliners.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Class Features</h2>
+
+    <div class="feature">
+      <span class="fname">Fighting Style: Defense</span>
+      <div class="fdesc">+1 AC while wearing armour. Combined with chain mail + shield, this gives AC 19 — the highest achievable at level 3 without magic.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Second Wind</span><span class="fuses">1 / Short or Long Rest</span>
+      <div class="fdesc">Bonus action: regain 1d10+3 HP. Simple self-heal that doesn't need anyone's help. Use it whenever you're below half HP — there's no reason to save it when a short rest is the refresh.</div>
+      <div class="tip"><strong>New player tip:</strong> This is your personal insurance policy. You have it back after a short rest (10 minutes), so don't feel like you're "wasting" it.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Action Surge</span><span class="fuses">1 / Short or Long Rest</span>
+      <div class="fdesc">Once per short rest, on your turn you may take one additional action. This lets you attack twice in one turn (two attack actions), or attack + dash, or attack + shove, etc. The single most powerful move available to you.</div>
+      <div class="tip"><strong>New player tip:</strong> Save Action Surge for the boss or a critical moment when you need to drop an enemy before they act. Using both attack actions gives you two rolls each at +5.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Improved Critical</span><span class="fuses">Champion</span>
+      <div class="fdesc">Your weapon attacks score a critical hit on a roll of 19 or 20 (instead of just 20). Critical hits double all damage dice. With a longsword, a crit deals 2d8+3 instead of 1d8+3.</div>
+    </div>
+
+    <div class="feature">
+      <span class="fname">Extra Attack</span>
+      <div class="fdesc">Not yet — this arrives at level 5 and grants two attacks per Attack action. At level 3 you make one attack per action (but Action Surge gives you a second action).</div>
+    </div>
+  </div>
+
+  <div class="quirk">
+    <div class="quirk-label">Once Per Long Rest · Character Quirk</div>
+    <div class="quirk-name">Not Today</div>
+    <div class="quirk-desc">When you are reduced to 0 hit points, you can choose to drop to 1 hit point instead. You do not fall unconscious. You must, however, immediately shout one sentence out loud at the table — addressed to your attacker. The sentence must be defiant. The DM decides if it's good enough. (It always is. The rule about the DM deciding exists to make you commit to the moment.) Then keep fighting.</div>
+  </div>
+
+  <div class="section">
+    <h2>Personality</h2>
+    <div class="personality">
+      <div class="ptrait"><div class="plbl">Trait</div><div class="ptxt">I can stare down a hellhound without flinching. I've seen worse, and I'll see worse still.</div></div>
+      <div class="ptrait"><div class="plbl">Ideal</div><div class="ptxt">Responsibility. I do what I must and accept the consequences without complaint.</div></div>
+      <div class="ptrait"><div class="plbl">Bond</div><div class="ptxt">Those who fought beside me are my family. I will lay down my life for them without hesitation.</div></div>
+      <div class="ptrait"><div class="plbl">Flaw</div><div class="ptxt">A mistake I made in battle haunts me. I'll do nearly anything to keep it from coming to light.</div></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-soft);text-align:right;margin-top:30px;border-top:1px solid var(--line);padding-top:8px;font-style:italic;">Portrait: Joseph Hewitt · <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--ink-soft);">CC-BY 4.0</a></p>
+</main>
+</div>
+</body>
+</html>
