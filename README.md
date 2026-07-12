@@ -135,9 +135,12 @@ The `pregenned-characters/` directory contains a full set of level 3 one-shot ch
 
 ### File Structure
 
+These pages are served by Jekyll (see §9). Each file contains only front matter + `<main>` content — no CSS or nav markup.
+
 ```
 pregenned-characters/
-  index.html          ← landing page with card grid (link here from your one-shot wiki)
+  index.html          ← landing page with card grid
+  cheatsheet.html     ← player-facing actions quick reference (Actions / Exploring / Between Adventures)
   barbarian.html      ← Grimtusk Ironskin (Half-Orc, Berserker, Outlander)
   bard.html           ← Lyria Ashveil (Half-Elf, Lore, Entertainer)
   cleric.html         ← Brother Aldric (Human Variant, Life, Acolyte)
@@ -167,7 +170,7 @@ All characters were built on the **standard array** (15, 14, 13, 12, 10, 8), ass
 
 ### Sheet Template (CSS Classes)
 
-Each sheet shares the same CSS skeleton as the one-shot wikis (warm parchment palette, sticky left nav with `.active` on current sheet, `@media print` hides nav). Additional classes unique to character sheets:
+All CSS lives in `_layouts/character.html` — not in individual files. The nav is in `_includes/pregen_nav.html`. The active link is set via `char_class` in each page's front matter (see §9). Classes available to sheet content:
 
 - `.quickstats` — row of chips (HP, AC, Speed, Initiative, etc.)
 - `.ability-box` — 6-column grid for STR/DEX/CON/INT/WIS/CHA with score, modifier, and label
@@ -201,10 +204,94 @@ Portraits are sourced from **Joseph Hewitt's Fantasy RPG Portrait Set 1** (openg
 
 ### Adding a New Pregen
 
-1. Copy any existing sheet as a starting point.
-2. Update the `<title>`, `<h1>`, `.char-sub`, and `.char-flavor` for the new character.
-3. Update the `.active` class in `<nav>` to point at the new file (or add a new nav entry if it's a new class).
-4. Fill in stats using the standard array and the class's primary ability priority.
-5. Add a `portraits/CLASSNAME.png` — 600×900 px looks best, portrait orientation.
-6. Add a `.quirk` box — one sentence to trigger, personal to the character, mildly absurd.
-7. Link the new sheet from `index.html` as a card in the appropriate section.
+1. Create `pregenned-characters/CLASSNAME.html` with this front matter:
+   ```yaml
+   ---
+   layout: character
+   title: "Character Name — Level 3 Class Pregen"
+   char_class: classname
+   ---
+   <main>
+     ...content...
+   </main>
+   ```
+2. If it's a new class (not replacing an existing one), add a nav entry to `_includes/pregen_nav.html` — one line, follows the existing `{% if page.char_class == '...' %}` pattern.
+3. Fill in stats using the standard array and the class's primary ability priority.
+4. Add `portraits/CLASSNAME.png` — 600×900 px, portrait orientation.
+5. Add a `.quirk` box — one sentence to trigger, personal to the character, mildly absurd.
+6. Link the new sheet from `index.html` as a card in the appropriate section.
+
+## 9. Jekyll Site Structure
+
+The repo root is the Jekyll site root. GitHub Pages runs Jekyll automatically on every push — no build step needed locally unless you want to preview.
+
+### Key files
+
+| File | Purpose |
+|---|---|
+| `_config.yml` | Site title, `baseurl: /one-shots`, excludes legacy directories from Jekyll processing |
+| `_layouts/character.html` | Single source of truth for all CSS + `{% include pregen_nav.html %}` + `{{ content }}` |
+| `_includes/pregen_nav.html` | Nav markup; active link driven by `{% if page.char_class == 'X' %}` |
+| `Gemfile` | Pins `github-pages` gem for local preview |
+| `.gitignore` | Excludes `_site/`, `.jekyll-cache/`, `vendor/` |
+
+### Page front matter
+
+Every page in `pregenned-characters/` is just front matter + a `<main>` block:
+
+```yaml
+---
+layout: character
+title: "Grimtusk Ironskin — Level 3 Barbarian Pregen"
+char_class: barbarian
+---
+<main>
+  ... content only, no <style> or <nav> ...
+</main>
+```
+
+`char_class` must match one of the values checked in `pregen_nav.html` to get the `.active` highlight.
+
+### Updating shared elements
+
+- **Nav change** (add a page, rename a link): edit `_includes/pregen_nav.html` — propagates to all 14 pages on the next build.
+- **CSS change** (new class, colour tweak): edit the `<style>` block in `_layouts/character.html` — propagates to all pages.
+- Neither file has Jekyll front matter of its own; they are pure partials/layouts.
+
+### Mobile nav
+
+At ≤640px the sidebar collapses. A ☰ button (fixed top-right) slides the nav in over a semi-transparent overlay. Implemented entirely in `_layouts/character.html` — ~20 lines of vanilla JS + a `@media(max-width:640px)` block. No framework.
+
+### Local preview
+
+```bash
+gem install bundler
+bundle install
+bundle exec jekyll serve
+# → http://localhost:4000/one-shots/pregenned-characters/
+```
+
+## 10. DM Section
+
+`dm_section/` is excluded from Jekyll processing and works as a standalone directory of plain HTML — open any file directly in a browser without a server.
+
+### Contents
+
+```
+dm_section/
+  index.html                  ← hub: links to both wikis + cheat sheet image gallery
+  dm_cheatsheet_01.jpeg       ← DM reference sheets (landscape, ~3686×2849 px)
+  dm_cheatsheet_02.jpeg
+  dm_cheatsheet_03.jpeg
+  dm_cheatsheet_04.jpeg
+  dm_cheatsheet_05.png        ← high-res variant (13200×10200 px)
+  dm_cheatsheet_06.jpeg
+  masks-of-millbrook/
+    index.html                ← The Masks of Millbrook DM wiki (3.5 hrs, level 3–4)
+  tabaxi-oneshot-5e/
+    index.html                ← The Hollow Chorus DM wiki (4 hrs, level 3–4)
+```
+
+### DM hub (`dm_section/index.html`)
+
+One-shot cards link directly to each wiki. Below them, six cheat sheet thumbnails open a vanilla-JS lightbox (←/→ arrows, Esc to close, click backdrop to close). Same parchment palette as the character sheets; no Jekyll dependency.
